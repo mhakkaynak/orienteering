@@ -10,5 +10,32 @@ class CustomThemeData {
     return _instance;
   }
 
-  ThemeData get theme => ThemeData.light(useMaterial3: true).copyWith();
+  ThemeData get theme => ThemeData.light(useMaterial3: true).copyWith(
+        primaryColor: const Color(0xFF326b23),
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF326b23),
+          onPrimary: Color(0xFFffffff),
+          primaryContainer: Color(0XFFb3f39b),
+          onPrimaryContainer: Color(0XFF022100),
+          secondary: Color(0xFF54624d),
+          onSecondary: Color(0xFFffffff),
+          secondaryContainer: Color(0xFFd7e8cc),
+          onSecondaryContainer: Color(0XFF121f0e),
+          tertiary: Color(0xFF386668),
+          onTertiary: Color(0xFFffffff),
+          tertiaryContainer: Color(0xFFbcebed),
+          onTertiaryContainer: Color(0xFF002021),
+          error: Color(0xFFba1a1a),
+          onError: Color(0xFFffffff),
+          errorContainer: Color(0xFFffdad6),
+          onErrorContainer: Color(0xFF410002),
+          background: Color(0xFFfdfdf6),
+          onBackground: Color(0xFF1a1c18),
+          surface: Color(0xFFfdfdf6),
+          onSurface: Color(0xFF1a1c18),
+          outline: Color(0xFF73796e),
+          surfaceVariant: Color(0xFFdfe4d7),
+          onSurfaceVariant: Color(0xFF43483f),
+        ),
+      );
 }

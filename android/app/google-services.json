@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "28461434716",
+    "project_id": "orienteering-858bc",
+    "storage_bucket": "orienteering-858bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28461434716:android:6c606a1a90715660362399",
+        "android_client_info": {
+          "package_name": "com.example.orienteering"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "28461434716-e1haiuba2tdaskpaoh05ppt3i102uoi0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.orienteering",
+            "certificate_hash": "2c8c9c523b6b24f8e5f90314c52fdfffa90921cc"
+          }
+        },
+        {
+          "client_id": "28461434716-1tn5qm67rgu3khgo3o6ttc1n6u6fher4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuHy8JYiqdK0yz7slC0Y4FU7kW9fZSfcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "28461434716-1tn5qm67rgu3khgo3o6ttc1n6u6fher4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
