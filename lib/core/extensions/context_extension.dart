@@ -8,12 +8,17 @@ extension PaddingExtension on BuildContext {
   double get height => mediaQuery.size.height;
   double get width => mediaQuery.size.width;
 
-  double get lowHeightValue => height * 0.02;
+  double get lowHeightValue => height * 0.06;
+
   double get lowWidthValue => width * 0.03;
 
-  double get normalHeightValue => height * 0.06;
+  double get normalHeightValue => height * 0.15;
 
-  double get highWidthValue => width * 0.7;
+  double get highWidthValue => width * 0.8;
+
+  double customHeightValue(double size) => height * size;
+
+  double customWidthValue(double size) => width * size;
 
   EdgeInsets get paddingLowSymmetric =>
       EdgeInsets.symmetric(horizontal: lowWidthValue, vertical: lowHeightValue);

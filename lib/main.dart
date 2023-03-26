@@ -4,13 +4,15 @@ import 'core/extensions/context_extension.dart';
 
 import 'core/init/navigation/navigation_manager.dart';
 import 'core/init/navigation/navigation_route_manager.dart';
-import 'firebase_options.dart';
 
 Future<void> main() async {
+  await _init();
   runApp(const MyApp());
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-);
+}
+
+Future<void> _init() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 }
 
 class MyApp extends StatelessWidget {
@@ -20,10 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: context.theme,
-      navigatorKey: NavigationManager.instance?.navigationKey,
+      navigatorKey: NavigationManager.instance.navigationKey,
       onGenerateRoute: (args) =>
           NavigationRouteManager.instance?.generateRoute(args),
       initialRoute: '/',
     );
-  }
+  } 
 }

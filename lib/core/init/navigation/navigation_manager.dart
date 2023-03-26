@@ -31,9 +31,9 @@ class NavigationManager implements INavigationManager {
     navigationKey.currentState?.pop();
   }
 
-  static NavigationManager? get instance {
+  static NavigationManager get instance {
     _instance ??= NavigationManager._init();
-    return _instance;
+    return _instance!;
   }
 
   get _removeOldPage => (Route<dynamic> route) => false;
