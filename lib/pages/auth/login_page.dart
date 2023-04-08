@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orienteering/core/extensions/context_extension.dart';
 import 'package:orienteering/core/extensions/string_extension.dart';
 import 'package:orienteering/widgets/app_bar/welcome_app_bar.dart';
+import 'package:orienteering/widgets/containers/auth_background_container.dart';
 
 import '../../core/constants/navigation/navigation_constant.dart';
 import '../../core/init/navigation/navigation_manager.dart';
@@ -16,42 +17,37 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final String _forgotPasswordText = 'Parolanızı mı unuttunuz?';
   final String _formatErrorText = 'Bilgileri belirtilen formatta giriniz.';
-
   final String _loginText = 'Giriş Yap';
   final TextEditingController _passwordController = TextEditingController();
 
-  Align _buildForgotPasswordButton(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: GestureDetector(
-        child: Text(
-          _forgotPasswordText,
-          style: context.textTheme?.bodyMedium
-              ?.copyWith(color: context.colors.primary),
+  Align _buildForgotPasswordButton(BuildContext context) => Align(
+        alignment: Alignment.centerRight,
+        child: GestureDetector(
+          child: Text(
+            _forgotPasswordText,
+            style: context.textTheme.bodyMedium
+                ?.copyWith(color: context.colors.primaryContainer),
+          ),
+          onTap: () {},
         ),
-        onTap: () {},
-      ),
-    );
-  }
+      );
 
-  Form _buildForm(BuildContext context) {
-    return Form(
-      autovalidateMode: AutovalidateMode.always,
-      child: Column(
-        children: [
-          EmailTextFormField(
-            controller: _emailController,
-          ),
-          SizedBox(
-            height: context.lowHeightValue,
-          ),
-          PasswordTextFormField(
-            controller: _passwordController,
-          ),
-        ],
-      ),
-    );
-  }
+  Form _buildForm(BuildContext context) => Form(
+        autovalidateMode: AutovalidateMode.always,
+        child: Column(
+          children: [
+            EmailTextFormField(
+              controller: _emailController,
+            ),
+            SizedBox(
+              height: context.lowHeightValue,
+            ),
+            PasswordTextFormField(
+              controller: _passwordController,
+            ),
+          ],
+        ),
+      );
 
   void _showError(BuildContext context, String text) {
     ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
@@ -60,18 +56,16 @@ class LoginPage extends StatelessWidget {
     ));
   }
 
-  SizedBox _buildLoginButton(BuildContext context) {
-    return SizedBox(
-      width: context.highWidthValue,
-      height: context.lowHeightValue,
-      child: FilledButton(
-        onPressed: () {
-          _loginOnPressed(context);
-        },
-        child: Text(_loginText),
-      ),
-    );
-  }
+  SizedBox _buildLoginButton(BuildContext context) => SizedBox(
+        width: context.highWidthValue,
+        height: context.lowHeightValue,
+        child: FilledButton(
+          onPressed: () {
+            _loginOnPressed(context);
+          },
+          child: Text(_loginText),
+        ),
+      );
 
   Future<void> _loginOnPressed(BuildContext context) async {
     if (_emailController.text.isValidEmail &&
@@ -89,18 +83,18 @@ class LoginPage extends StatelessWidget {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: WelcomeAppBar(),
-      body: Padding(
-        padding: context.paddingLowSymmetric,
-        child: SingleChildScrollView(
+  SingleChildScrollView _buildBody(BuildContext context) =>
+      SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        child: Padding(
+          padding: context.paddingLowSymmetric,
           child: Column(
             children: [
+              SizedBox(
+                height: context.normalHeightValue,
+              ),
               const Placeholder(
-                fallbackHeight: 250,
-                fallbackWidth: 150,
+                fallbackHeight: 200,
               ),
               SizedBox(
                 height: context.normalHeightValue * 0.6,
@@ -113,7 +107,19 @@ class LoginPage extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: WelcomeAppBar(
+          context: context,
+        ),
+        body: Stack(
+          children: [
+            AuthBackgroundContainer(),
+            _buildBody(context),
+          ],
+        ),
+      );
 }

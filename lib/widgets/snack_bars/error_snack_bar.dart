@@ -14,7 +14,7 @@ class ErrorSnackBar extends SnackBar {
                 borderRadius: const BorderRadius.all(
                   Radius.circular(16),
                 ),
-                color: context.theme?.colorScheme.error,
+                color: context.theme.colorScheme.error,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
@@ -23,7 +23,7 @@ class ErrorSnackBar extends SnackBar {
                     text ?? 'Hata',
                     style: TextStyle(
                       fontSize: 12,
-                      color: context.theme?.colorScheme.onError,
+                      color: context.theme.colorScheme.onError,
                     ),
                   ),
                 ),

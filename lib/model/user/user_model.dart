@@ -9,8 +9,6 @@ class UserModel extends BaseModel {
     this.coin,
   );
 
-  UserModel.empty();
-
   UserModel._fromJson(o) {
     userName = o['userName'];
     email = o['email'];
@@ -19,14 +17,23 @@ class UserModel extends BaseModel {
     coin = int.tryParse(o['coin'].toString());
   }
 
-  String? userName;
-  String? email;
-  int? city;
-  String? uid;
-  int? coin;
-
   @override
   fromJson(json) => UserModel._fromJson(json);
+
+  UserModel.empty();
+
+  UserModel.register({
+    this.userName,
+    this.email,
+    this.password,
+  });
+
+  int? city;
+  int? coin;
+  String? email;
+  String? password;
+  String? uid;
+  String? userName;
 
   @override
   Map<String, dynamic> toJson() => {

@@ -53,4 +53,25 @@ class UserService {
     }
     return null;
   }
+
+  Future<String?> registerWithEmail(UserModel user) async {
+    try {
+      var userData = await _firestoreManager.getByName(
+          'userName', user.userName.toString());
+      if (userData != '') {
+        throw Exception(
+            'Bu kullanıcı adı daha önce kullanılmış. Lütfen başka bir kullanıcı adı deneyiniz');
+      }
+      await FirebaseAuthManager.instance
+          .registerWithEmail(user.email.toString(), user.password.toString());
+      user.uid = FirebaseAuthManager.instance.uid.toString();
+      user.coin = 100;
+      user.city = 41;
+      _firestoreManager.insert(user, user.uid.toString());
+      NavigationManager.instance.navigationToPageClear(NavigationConstant.home);
+    } catch (e) {
+      return _errorText;
+    }
+    return null;
+  }
 }

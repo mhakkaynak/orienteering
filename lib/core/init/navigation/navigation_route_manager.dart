@@ -5,7 +5,6 @@ import '../../../pages/auth/login_page.dart';
 import '../../../pages/auth/register_page.dart';
 import '../../constants/navigation/navigation_constant.dart';
 
-
 class NavigationRouteManager {
   NavigationRouteManager._init();
 
@@ -23,7 +22,7 @@ class NavigationRouteManager {
       case NavigationConstant.login:
         return _navigationToDefault(LoginPage(), args);
       case NavigationConstant.register:
-        return _navigationToDefault(const RegisterPage(), args);
+        return _navigationToDefault(RegisterPage(), args);
       default:
         return _navigationToDefault(LoginPage(), args);
     }

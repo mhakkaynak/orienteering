@@ -25,9 +25,9 @@ extension PaddingExtension on BuildContext {
 }
 
 extension ThemeExtension on BuildContext {
-  ThemeData? get theme => CustomThemeData.instance.theme;
+  ThemeData get theme => CustomThemeData.instance.theme;
 
   ColorScheme get colors => CustomThemeData.instance.theme.colorScheme;
 
-  TextTheme? get textTheme => theme?.textTheme;
+  TextTheme get textTheme => theme.textTheme;
 }
