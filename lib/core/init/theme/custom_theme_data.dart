@@ -5,9 +5,9 @@ class CustomThemeData {
 
   static CustomThemeData? _instance;
 
-  static CustomThemeData? get instance {
+  static CustomThemeData get instance {
     _instance ??= CustomThemeData._init();
-    return _instance;
+    return _instance!;
   }
 
   ThemeData get theme => ThemeData.light(useMaterial3: true).copyWith(
@@ -37,5 +37,13 @@ class CustomThemeData {
           surfaceVariant: Color(0xFFdfe4d7),
           onSurfaceVariant: Color(0xFF43483f),
         ),
+        inputDecorationTheme: const InputDecorationTheme(
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(24)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+            )),
       );
 }

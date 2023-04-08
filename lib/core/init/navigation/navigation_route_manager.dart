@@ -21,11 +21,11 @@ class NavigationRouteManager {
       case NavigationConstant.auth:
         return _navigationToDefault(const AuthPage(), args);
       case NavigationConstant.login:
-        return _navigationToDefault(const LoginPage(), args);
+        return _navigationToDefault(LoginPage(), args);
       case NavigationConstant.register:
         return _navigationToDefault(const RegisterPage(), args);
       default:
-        return _navigationToDefault(const LoginPage(), args);
+        return _navigationToDefault(LoginPage(), args);
     }
   }
 

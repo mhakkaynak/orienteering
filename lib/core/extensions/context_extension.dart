@@ -21,11 +21,13 @@ extension PaddingExtension on BuildContext {
   double customWidthValue(double size) => width * size;
 
   EdgeInsets get paddingLowSymmetric =>
-      EdgeInsets.symmetric(horizontal: lowWidthValue, vertical: lowHeightValue);
+      EdgeInsets.symmetric(horizontal: lowWidthValue, vertical: height * 0.01);
 }
 
 extension ThemeExtension on BuildContext {
-  ThemeData? get theme => CustomThemeData.instance?.theme;
+  ThemeData? get theme => CustomThemeData.instance.theme;
+
+  ColorScheme get colors => CustomThemeData.instance.theme.colorScheme;
 
   TextTheme? get textTheme => theme?.textTheme;
 }
