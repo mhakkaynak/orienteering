@@ -32,7 +32,8 @@ class UserService {
           userModel = await _firestoreManager.get<UserModel>(user.uid,
               model: userModel) as UserModel;
         } catch (e) {
-          userModel = UserModel(userName, user.email, 41, user.uid, 100);
+          userModel = UserModel(
+              userName, user.email, 41, user.uid, 100, 1, 'undefiend');
           _firestoreManager.insert(userModel, userModel.uid!);
         }
         NavigationManager.instance
@@ -66,8 +67,9 @@ class UserService {
           .registerWithEmail(user.email.toString(), user.password.toString());
       user.uid = FirebaseAuthManager.instance.uid.toString();
       user.coin = 100;
+      user.level = 1.0;
       user.city = 41;
-      _firestoreManager.insert(user, user.uid.toString());
+      await _firestoreManager.insert(user, user.uid.toString());
       NavigationManager.instance.navigationToPageClear(NavigationConstant.home);
     } catch (e) {
       return _errorText;

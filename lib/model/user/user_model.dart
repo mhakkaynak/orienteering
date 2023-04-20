@@ -7,6 +7,8 @@ class UserModel extends BaseModel {
     this.city,
     this.uid,
     this.coin,
+    this.level,
+    this.gender,
   );
 
   UserModel._fromJson(o) {
@@ -15,6 +17,8 @@ class UserModel extends BaseModel {
     uid = o['uid'];
     city = int.tryParse(o['city'].toString());
     coin = int.tryParse(o['coin'].toString());
+    level = double.tryParse(o['level'].toString());
+    gender = o['gender'];
   }
 
   @override
@@ -31,6 +35,8 @@ class UserModel extends BaseModel {
   int? city;
   int? coin;
   String? email;
+  String? gender;
+  double? level;
   String? password;
   String? uid;
   String? userName;
@@ -42,5 +48,7 @@ class UserModel extends BaseModel {
         'city': city,
         'uid': uid,
         'coin': coin,
+        'level': level,
+        'gender': gender,
       };
 }

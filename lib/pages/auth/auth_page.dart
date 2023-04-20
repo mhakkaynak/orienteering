@@ -24,7 +24,7 @@ class AuthPage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) => Scaffold( 
         body: AuthBackgroundContainer(
           child: Padding(
             padding: context.paddingLowSymmetric,
