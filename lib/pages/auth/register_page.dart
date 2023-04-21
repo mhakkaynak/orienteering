@@ -5,7 +5,7 @@ import 'package:orienteering/widgets/app_bar/welcome_app_bar.dart';
 import 'package:orienteering/widgets/containers/auth_background_container.dart';
 
 import '../../model/user/user_model.dart';
-import '../../service/user/user_service.dart';
+import '../../service/user/user_auth_service.dart';
 import '../../widgets/snack_bars/error_snack_bar.dart';
 import '../../widgets/text_form_field/email_text_form_field.dart';
 import '../../widgets/text_form_field/password_text_form_field.dart';
@@ -61,7 +61,7 @@ class RegisterPage extends StatelessWidget {
           userName: _userNameController.text,
           email: _emailController.text,
           password: _passwordController.text);
-      String? text = await UserService.instance.registerWithEmail(user);
+      String? text = await UserAuthService.instance.registerWithEmail(user);
       if (text != null && context.mounted) {
         _showError(context, text);
       }

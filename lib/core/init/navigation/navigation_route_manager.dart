@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orienteering/pages/auth/auth_page.dart';
 import 'package:orienteering/pages/home/home_page.dart';
+import 'package:orienteering/pages/user/user_edit_page.dart';
 
 import '../../../pages/auth/login_page.dart';
 import '../../../pages/auth/register_page.dart';
@@ -26,6 +27,8 @@ class NavigationRouteManager {
         return _navigationToDefault(RegisterPage(), args);
       case NavigationConstant.home:
         return _navigationToDefault(const HomePage(), args);
+      case NavigationConstant.userEdit:
+        return _navigationToDefault(const UserEditPage(), args);
       default:
         return _navigationToDefault(LoginPage(), args);
     }

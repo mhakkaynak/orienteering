@@ -6,7 +6,7 @@ import 'package:orienteering/widgets/containers/auth_background_container.dart';
 
 import '../../core/constants/navigation/navigation_constant.dart';
 import '../../core/init/navigation/navigation_manager.dart';
-import '../../service/user/user_service.dart';
+import '../../service/user/user_auth_service.dart';
 import '../../widgets/snack_bars/error_snack_bar.dart';
 import '../../widgets/text_form_field/email_text_form_field.dart';
 import '../../widgets/text_form_field/password_text_form_field.dart';
@@ -70,7 +70,7 @@ class LoginPage extends StatelessWidget {
   Future<void> _loginOnPressed(BuildContext context) async {
     if (_emailController.text.isValidEmail &&
         _passwordController.text.isValidPassword) {
-      String? text = await UserService.instance
+      String? text = await UserAuthService.instance
           .signInWithEmail(_emailController.text, _passwordController.text);
       if (text != null && context.mounted) {
         _showError(context, text);

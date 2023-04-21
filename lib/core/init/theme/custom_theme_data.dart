@@ -50,9 +50,15 @@ class CustomThemeData {
                 fontWeight: FontWeight.bold,
               ),
               titleSmall: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: _colorScheme.onSecondaryContainer),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: _colorScheme.onSecondaryContainer,
+              ),
+              labelMedium: TextStyle(
+                fontSize: 16,
+                color: _colorScheme.onSecondaryContainer,
+                fontWeight: FontWeight.w500,
+              ),
             ),
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,

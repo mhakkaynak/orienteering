@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orienteering/core/constants/navigation/navigation_constant.dart';
 import 'package:orienteering/core/extensions/context_extension.dart';
 import 'package:orienteering/core/init/navigation/navigation_manager.dart';
-import 'package:orienteering/service/user/user_service.dart';
+import 'package:orienteering/service/user/user_auth_service.dart';
 import 'package:orienteering/widgets/buttons/google_sign_in_button.dart';
 import 'package:orienteering/widgets/containers/auth_background_container.dart';
 
@@ -20,11 +20,11 @@ class AuthPage extends StatelessWidget {
               child: Text(text)));
 
   void _googleSignIn() {
-    UserService.instance.signInWithGoogle();
+    UserAuthService.instance.signInWithGoogle();
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold( 
+  Widget build(BuildContext context) => Scaffold(
         body: AuthBackgroundContainer(
           child: Padding(
             padding: context.paddingLowSymmetric,

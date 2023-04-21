@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 extension StringExtension on String {
   bool get isValidEmail => RegExp(
           r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
@@ -14,4 +16,15 @@ extension StringExtension on String {
           .hasMatch(this);
 
   bool get isValidUserName => !RegExp('\\s+').hasMatch(this) && length >= 3;
+
+  IconData? get toIcon {
+    switch (this) {
+      case 'Erkek':
+        return Icons.male_outlined;
+      case 'Kadın':
+        return Icons.male_outlined;
+      default:
+        return null;
+    }
+  }
 }

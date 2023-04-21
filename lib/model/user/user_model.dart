@@ -40,6 +40,7 @@ class UserModel extends BaseModel {
   String? password;
   String? uid;
   String? userName;
+  String cityString = 'Kocaeli';
 
   @override
   Map<String, dynamic> toJson() => {

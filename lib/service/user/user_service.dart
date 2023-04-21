@@ -1,79 +1,32 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:orienteering/core/init/firebase/firebase_auth_manager.dart';
+import 'package:orienteering/model/user/user_model.dart';
+import 'package:orienteering/service/location/location_service.dart';
+import 'package:orienteering/service/user/base_user_service.dart';
 
-import '../../core/constants/navigation/navigation_constant.dart';
-import '../../core/init/firebase/firebase_auth_manager.dart';
-import '../../core/init/firebase/firestore_manager.dart';
-import '../../core/init/navigation/navigation_manager.dart';
-import '../../model/user/user_model.dart';
-
-class UserService {
-  UserService._init() {
-    _firestoreManager = FirestoreManager('user');
-  }
+class UserService extends BaseUserService {
+  UserService._init() : super();
 
   static UserService? _instance;
-
-  final _errorText = 'Hata: Lütfen tekrar deneyiniz.';
-  late final FirestoreManager _firestoreManager;
 
   static UserService get instance {
     _instance ??= UserService._init();
     return _instance!;
   }
 
-  Future<String?> signInWithGoogle() async {
-    String userName = '';
+  Future<UserModel> getUser() async {
+    UserModel user = UserModel.empty();
+
     try {
-      User? user = await FirebaseAuthManager.instance.signInWithGoogle();
-      if (user != null) {
-        userName = (user.displayName ?? user.email) ?? '';
-        UserModel userModel = UserModel.empty();
-        try {
-          userModel = await _firestoreManager.get<UserModel>(user.uid,
-              model: userModel) as UserModel;
-        } catch (e) {
-          userModel = UserModel(
-              userName, user.email, 41, user.uid, 100, 1, 'undefiend');
-          _firestoreManager.insert(userModel, userModel.uid!);
-        }
-        NavigationManager.instance
-            .navigationToPageClear(NavigationConstant.home);
+      String? uid = FirebaseAuthManager.instance.uid;
+      if (uid != null) {
+        user = await super.firestoreManager.get(uid, model: user) as UserModel;
+        var data = await LocationService.instance // get city name
+            .getCityWithLicensePlate(user.city ?? 0);
+        user.cityString = data;
       }
     } catch (e) {
-      return _errorText;
+      // TODO error page
     }
-    return null;
-  }
-
-  Future<String?> signInWithEmail(String email, String password) async {
-    try {
-      await FirebaseAuthManager.instance.signInWithEmail(email, password);
-      NavigationManager.instance.navigationToPageClear(NavigationConstant.home);
-    } catch (e) {
-      return _errorText;
-    }
-    return null;
-  }
-
-  Future<String?> registerWithEmail(UserModel user) async {
-    try {
-      var userData = await _firestoreManager.getByName(
-          'userName', user.userName.toString());
-      if (userData != '') {
-        throw Exception(
-            'Bu kullanıcı adı daha önce kullanılmış. Lütfen başka bir kullanıcı adı deneyiniz');
-      }
-      await FirebaseAuthManager.instance
-          .registerWithEmail(user.email.toString(), user.password.toString());
-      user.uid = FirebaseAuthManager.instance.uid.toString();
-      user.coin = 100;
-      user.level = 1.0;
-      user.city = 41;
-      await _firestoreManager.insert(user, user.uid.toString());
-      NavigationManager.instance.navigationToPageClear(NavigationConstant.home);
-    } catch (e) {
-      return _errorText;
-    }
-    return null;
+    return user;
   }
 }
