@@ -5,11 +5,6 @@ class CustomThemeData {
 
   static CustomThemeData? _instance;
 
-  static CustomThemeData get instance {
-    _instance ??= CustomThemeData._init();
-    return _instance!;
-  }
-
   final ColorScheme _colorScheme = const ColorScheme.light(
     primary: Color(0xFF326b23),
     onPrimary: Color(0xFFffffff),
@@ -36,15 +31,35 @@ class CustomThemeData {
     onSurfaceVariant: Color(0xFF43483f),
   );
 
+  static CustomThemeData get instance {
+    _instance ??= CustomThemeData._init();
+    return _instance!;
+  }
+
   ThemeData get theme => ThemeData.light(useMaterial3: true).copyWith(
         primaryColor: const Color(0xFF326b23),
         colorScheme: _colorScheme,
         textTheme: ThemeData.light().textTheme.copyWith(
-                displaySmall: TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.bold,
-              color: _colorScheme.tertiary,
-            )),
+              displaySmall: TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+                color: _colorScheme.tertiary,
+              ),
+              titleLarge: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+              titleSmall: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: _colorScheme.onSecondaryContainer,
+              ),
+              labelMedium: TextStyle(
+                fontSize: 16,
+                color: _colorScheme.onSecondaryContainer,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,
           border: OutlineInputBorder(

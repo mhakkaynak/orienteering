@@ -22,6 +22,9 @@ extension PaddingExtension on BuildContext {
 
   EdgeInsets get paddingLowSymmetric =>
       EdgeInsets.symmetric(horizontal: lowWidthValue, vertical: height * 0.01);
+
+  EdgeInsets get paddingNormalSymmetric => EdgeInsets.symmetric(
+      horizontal: lowWidthValue * 2.4, vertical: height * 0.024);
 }
 
 extension ThemeExtension on BuildContext {
