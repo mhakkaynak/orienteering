@@ -35,9 +35,17 @@ class FirestoreManager {
     }
   }
 
-  Future<List<dynamic>> getAll<T extends BaseModel>({T? model}) async {
+  Future<List<dynamic>> getAll<T extends BaseModel>(
+      {T? model, String? order, bool descending = false}) async {
     try {
-      QuerySnapshot querySnapshot = await _collectionReference.get();
+      QuerySnapshot querySnapshot;
+      if (order != null) {
+        querySnapshot = await _collectionReference
+            .orderBy(order, descending: descending)
+            .get();
+      } else {
+        querySnapshot = await _collectionReference.get();
+      }
       return querySnapshot.docs
           .map((doc) => model != null ? model.fromJson(doc.data()) : doc.data())
           .toList();
