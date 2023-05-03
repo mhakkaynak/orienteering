@@ -14,16 +14,24 @@ class LocationService {
     return _instance!;
   }
 
-  Future<Map<String, dynamic>> getCities() async {
-    Map<String, dynamic> cities = {};
-    cities = await _firestoreManager.get('city') as Map<String, dynamic>;
-    return cities;
+  Future<List<String>> getCities() async {
+    try {
+      Map<String, dynamic> cities = {};
+      cities = await _firestoreManager.get('city') as Map<String, dynamic>;
+      List<String> cityList = [];
+      for (var i = 0; i < cities.length; i++) {
+        cityList.add(cities[(i + 1).toString()] ?? 'Kocaeli');
+      }
+      return cityList;
+    } catch (e) {
+      return [];
+    }
   }
 
   Future<String> getCityWithLicensePlate(int licensePlate) async {
     try {
       var cities = await getCities();
-      return cities[licensePlate.toString()];
+      return cities[licensePlate - 1];
     } catch (e) {
       return 'Kocaeli';
     }

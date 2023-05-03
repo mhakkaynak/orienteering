@@ -15,7 +15,6 @@ class UserService extends BaseUserService {
 
   Future<UserModel> getUser() async {
     UserModel user = UserModel.empty();
-
     try {
       String? uid = FirebaseAuthManager.instance.uid;
       if (uid != null) {
@@ -28,5 +27,15 @@ class UserService extends BaseUserService {
       // TODO error page
     }
     return user;
+  }
+
+  Future<String> updateUser(UserModel user) async {
+    String response = '';
+    try {
+      await super.firestoreManager.update(user, user.uid.toString());
+    } catch (e) {
+      response = 'Hata: Güncelleme işlemi yapılamadı.';
+    }
+    return response;
   }
 }

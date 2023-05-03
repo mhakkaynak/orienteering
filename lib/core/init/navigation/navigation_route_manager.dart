@@ -28,7 +28,7 @@ class NavigationRouteManager {
       case NavigationConstant.home:
         return _navigationToDefault(const HomePage(), args);
       case NavigationConstant.userEdit:
-        return _navigationToDefault(const UserEditPage(), args);
+        return _navigationToDefault( UserEditPage(), args);
       default:
         return _navigationToDefault(LoginPage(), args);
     }

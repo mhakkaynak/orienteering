@@ -17,7 +17,7 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  UserModel user = UserModel.empty();
+  UserModel _user = UserModel.empty();
 
   @override
   void initState() {
@@ -65,20 +65,20 @@ class _UserPageState extends State<UserPage> {
           children: [
             _buildInfoText(context),
             const SizedBox(height: 16),
-            _buildInfoLine(context, 'Level', user.level!.toStringAsFixed(0),
+            _buildInfoLine(context, 'Level', _user.level!.toStringAsFixed(0),
                 icon: Icons.brightness_7_outlined),
             _buildDivider(context),
-            _buildInfoLine(context, 'Kredi', user.coin.toString(),
+            _buildInfoLine(context, 'Kredi', _user.coin.toString(),
                 icon: Icons.monetization_on_outlined),
             _buildDivider(context),
-            _buildInfoLine(context, 'Email', user.email.toString(),
+            _buildInfoLine(context, 'Email', _user.email.toString(),
                 icon: Icons.mail_outline),
             _buildDivider(context),
-            _buildInfoLine(context, 'Şehir', user.cityString,
+            _buildInfoLine(context, 'Şehir', _user.cityString,
                 icon: Icons.location_city_outlined),
             _buildDivider(context),
-            _buildInfoLine(context, 'Cinsiyet', user.gender.toString(),
-                icon: user.gender.toString().toIcon),
+            _buildInfoLine(context, 'Cinsiyet', _user.gender.toString(),
+                icon: _user.gender.toString().toIcon),
             _buildDivider(context),
           ],
         ),
@@ -110,7 +110,7 @@ class _UserPageState extends State<UserPage> {
       );
 
   Future<void> _init() async {
-    user = await UserService.instance.getUser();
+    _user = await UserService.instance.getUser();
     setState(() {});
   }
 
@@ -120,7 +120,7 @@ class _UserPageState extends State<UserPage> {
 
   Center _buildUserNameText(BuildContext context) => Center(
         child: Text(
-          user.userName ?? '',
+          _user.userName ?? '',
           style: context.textTheme.displaySmall?.copyWith(color: Colors.black),
         ),
       );
@@ -140,7 +140,7 @@ class _UserPageState extends State<UserPage> {
               _buildSizedBoxLowHeight(context),
               _buildUserNameText(context),
               _buildSizedBoxLowHeight(context),
-              user.userName != null
+              _user.userName != null
                   ? _buildContainer(context)
                   : const Center(child: CircularProgressIndicator()),
               _buildLogOutButton(context)
