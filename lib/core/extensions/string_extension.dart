@@ -22,9 +22,9 @@ extension StringExtension on String {
       case 'Erkek':
         return Icons.male_outlined;
       case 'Kadın':
-        return Icons.male_outlined;
+        return Icons.female_outlined;
       default:
-        return null;
+        return Icons.person_2_outlined;
     }
   }
 }

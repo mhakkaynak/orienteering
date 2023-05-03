@@ -3,6 +3,6 @@ mixin NavigationConstant {
   static const auth = '/auth';
   static const login = '/login';
   static const register = '/register';
-  static const home = '/home';
-  static const userEdit = '/';
+  static const home = '/';
+  static const userEdit = '/userEdit';
 }

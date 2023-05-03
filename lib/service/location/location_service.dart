@@ -31,7 +31,7 @@ class LocationService {
   Future<String> getCityWithLicensePlate(int licensePlate) async {
     try {
       var cities = await getCities();
-      return cities[licensePlate];
+      return cities[licensePlate - 1];
     } catch (e) {
       return 'Kocaeli';
     }

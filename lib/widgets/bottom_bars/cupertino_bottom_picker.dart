@@ -11,7 +11,7 @@ class CupertinoBottomPicker extends CupertinoActionSheet {
     required List<Widget> children,
     double itemExtent = 36,
     int initialItem = 0,
-    double height = 0.24,
+    double height = 0.16,
     bool looping = false,
     Function? cancelOnPressed,
     required Function(int) onSelectedItemChanged,
