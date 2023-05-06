@@ -1,7 +1,10 @@
+import 'package:orienteering/core/constants/navigation/navigation_constant.dart';
 import 'package:orienteering/core/init/firebase/firebase_auth_manager.dart';
 import 'package:orienteering/model/user/user_model.dart';
 import 'package:orienteering/service/location/location_service.dart';
 import 'package:orienteering/service/user/base_user_service.dart';
+
+import '../../core/init/navigation/navigation_manager.dart';
 
 class UserService extends BaseUserService {
   UserService._init() : super();
@@ -24,7 +27,8 @@ class UserService extends BaseUserService {
         user.cityString = data;
       }
     } catch (e) {
-      // TODO error page
+      NavigationManager.instance
+          .navigationToPageClear(NavigationConstant.error);
     }
     return user;
   }
