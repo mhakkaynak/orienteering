@@ -21,11 +21,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: context.theme,
       navigatorKey: NavigationManager.instance.navigationKey,
-      onGenerateRoute: (args) =>
-          NavigationRouteManager.instance?.generateRoute(args),
+      onGenerateRoute: (args) => NavigationRouteManager.instance?.generateRoute(args),
       initialRoute: '/',
     );
-  } 
+  }
 }

@@ -3,6 +3,7 @@ import 'package:orienteering/core/extensions/context_extension.dart';
 import 'package:orienteering/pages/user/user_page.dart';
 
 import '../../widgets/navigation_bar/custom_navigation_bar.dart';
+import 'out_map_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,8 +19,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBody(),
-      bottomNavigationBar: CustomBottomNavigationBar(
-          context: context, onTabChange: _onTabChange),
+      bottomNavigationBar: CustomBottomNavigationBar(context: context, onTabChange: _onTabChange),
     );
   }
 
@@ -32,9 +32,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildBody() {
     switch (_selectedIndex) {
       case 0:
-        return Center(
-          child: Text('test1'),
-        );
+        return OutMapPage();
       case 1:
         return Center(
           child: Text('test2'),
