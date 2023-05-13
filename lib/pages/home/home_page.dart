@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orienteering/core/extensions/context_extension.dart';
+import 'package:orienteering/pages/home/subpages/home_subpage.dart';
 import 'package:orienteering/pages/user/user_page.dart';
 
 import '../../widgets/navigation_bar/custom_navigation_bar.dart';
@@ -32,9 +33,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildBody() {
     switch (_selectedIndex) {
       case 0:
-        return Center(
-          child: Text('test1'),
-        );
+        return const HomeSubpage();
       case 1:
         return Center(
           child: Text('test2'),

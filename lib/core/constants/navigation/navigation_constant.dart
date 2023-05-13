@@ -5,5 +5,6 @@ mixin NavigationConstant {
   static const home = '/';
   static const login = '/login';
   static const register = '/register';
+  static const search = '/search';
   static const userEdit = '/userEdit';
 }
