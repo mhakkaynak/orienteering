@@ -39,7 +39,6 @@ class _HomeSubpageState extends State<HomeSubpage> {
         child: Column(
           children: [
             _buildCityRow(context),
-            
           ],
         ),
       ),
@@ -55,7 +54,10 @@ class _HomeSubpageState extends State<HomeSubpage> {
           style: context.textTheme.titleLarge?.copyWith(fontSize: 20),
         ),
         GestureDetector(
-          onTap: _goToSearchPage,
+          onTap: () {
+            NavigationManager.instance
+                .navigationToPage(NavigationConstant.userEdit);
+          },
           child: Row(
             children: [
               Text(
@@ -75,22 +77,20 @@ class _HomeSubpageState extends State<HomeSubpage> {
 
   PreferredSize _buildAppBar(BuildContext context) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(context.customHeightValue(0.08)),
+      preferredSize: Size.fromHeight(context.customHeightValue(0.09)),
       child: Padding(
         padding: EdgeInsets.only(top: context.customHeightValue(0.06)),
         child: CustomSearchBar(
           context: context,
-          onPressed: _goToSearchPage,
+          onPressed: () {
+            NavigationManager.instance
+                .navigationToPage(NavigationConstant.eventList);
+          },
           rightWidget: const CircleAvatar(
             backgroundColor: Colors.amber,
           ),
         ),
       ),
     );
-  }
-
-  void _goToSearchPage() {
-NavigationManager.instance
-                .navigationToPage(NavigationConstant.search);
   }
 }

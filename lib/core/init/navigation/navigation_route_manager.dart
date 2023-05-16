@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orienteering/pages/auth/auth_page.dart';
 import 'package:orienteering/pages/error/error_page.dart';
 import 'package:orienteering/pages/home/home_page.dart';
-import 'package:orienteering/pages/home/subpages/search_subpage.dart';
+import 'package:orienteering/pages/home/subpages/event_list_subpage.dart';
 import 'package:orienteering/pages/user/user_edit_page.dart';
 
 import '../../../pages/auth/login_page.dart';
@@ -33,8 +33,8 @@ class NavigationRouteManager {
         return _navigationToDefault(const HomePage(), args);
       case NavigationConstant.userEdit:
         return _navigationToDefault(const UserEditPage(), args);
-        case NavigationConstant.search:
-        return _navigationToDefault(const SearchSubPage(), args);
+      case NavigationConstant.eventList:
+        return _navigationToDefault(const EventListSubpage(), args);
       default:
         return _navigationToDefault(const ErrorPage(), args);
     }
