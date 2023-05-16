@@ -24,7 +24,7 @@ class _UserPageState extends State<UserPage> {
     _init();
     super.initState();
   }
-
+  
   Padding _buildLogOutButton(BuildContext context) => Padding(
         padding: context.paddingNormalSymmetric,
         child: FilledButton(
@@ -110,8 +110,10 @@ class _UserPageState extends State<UserPage> {
       );
 
   Future<void> _init() async {
-    _user = await UserService.instance.getUser();
-    setState(() {});
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _user = await UserService.instance.getUser();
+      setState(() {});
+    });
   }
 
   SizedBox _buildSizedBoxLowHeight(BuildContext context) => SizedBox(

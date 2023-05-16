@@ -3,5 +3,7 @@ abstract class INavigationManager {
 
   Future<void> navigationToPageClear(String path, {Object? args});
 
+  Future<void> navigationToPageClearWithDelay(String path, {Object? args});
+
   void navigationToPop();
 }

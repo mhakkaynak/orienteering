@@ -25,10 +25,12 @@ class UserService extends BaseUserService {
         var data = await LocationService.instance // get city name
             .getCityWithLicensePlate(user.city ?? 0);
         user.cityString = data;
+      } else {
+        throw Exception('Hata');
       }
     } catch (e) {
       NavigationManager.instance
-          .navigationToPageClear(NavigationConstant.error);
+          .navigationToPageClearWithDelay(NavigationConstant.error);
     }
     return user;
   }
