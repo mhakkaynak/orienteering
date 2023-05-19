@@ -10,11 +10,9 @@ class CustomBottomNavigationBar extends Padding {
     required Function(int) onTabChange,
   }) : super(
             key: key,
-            padding: EdgeInsets.symmetric(
-                horizontal: context.lowWidthValue / 2,
-                vertical: context.lowHeightValue / 2),
+            padding: EdgeInsets.symmetric(horizontal: context.lowWidthValue / 2, vertical: context.lowHeightValue / 2),
             child: GNav(
-              tabBackgroundColor: context.theme!.colorScheme.surfaceVariant,
+              tabBackgroundColor: context.theme.colorScheme.surfaceVariant,
               padding: context.paddingLowSymmetric,
               onTabChange: onTabChange,
               tabs: const [

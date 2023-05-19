@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/core/extensions/context_extension.dart';
 import 'package:orienteering/pages/user/user_page.dart';
-
 import '../../widgets/navigation_bar/custom_navigation_bar.dart';
 import 'out_map_page.dart';
 
