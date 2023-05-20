@@ -37,6 +37,7 @@ dependencies:
   flutter_svg: ^2.0.4
   google_nav_bar: ^5.0.6
   google_sign_in: ^6.1.0
+  intl: ^0.18.1
   mobx: ^2.1.4
   qr_flutter: ^4.1.0
 
