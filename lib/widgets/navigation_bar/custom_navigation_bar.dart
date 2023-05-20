@@ -23,8 +23,8 @@ class CustomBottomNavigationBar extends Padding {
                   text: 'Ana Sayfa',
                 ),
                 GButton(
-                  icon: Icons.newspaper_outlined,
-                  text: '-',
+                  icon: Icons.add_box_outlined,
+                  text: 'Yeni Oyun',
                 ),
                 GButton(
                   icon: Icons.account_box_outlined,

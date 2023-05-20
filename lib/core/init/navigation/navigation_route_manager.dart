@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/pages/auth/auth_page.dart';
-import 'package:orienteering/pages/error/error_page.dart';
-import 'package:orienteering/pages/game/indoor/create_game/indoor_create_game_page.dart';
-import 'package:orienteering/pages/game/indoor/create_game/qr_create_page.dart';
-import 'package:orienteering/pages/game/indoor/create_game/qr_list_page.dart';
-import 'package:orienteering/pages/home/home_page.dart';
-import 'package:orienteering/pages/home/subpages/event_list_subpage.dart';
-import 'package:orienteering/pages/user/user_edit_page.dart';
+import '../../../pages/auth/auth_page.dart';
+import '../../../pages/error/error_page.dart';
+import '../../../pages/game/indoor/create_game/indoor_create_game_page.dart';
+import '../../../pages/game/indoor/create_game/qr_create_page.dart';
+import '../../../pages/game/indoor/create_game/qr_list_page.dart';
+import '../../../pages/game/indoor/game/indoor_game_detail_page.dart';
+import '../../../pages/home/home_page.dart';
+import '../../../pages/home/subpages/event_list_subpage.dart';
+import '../../../pages/user/user_edit_page.dart';
 
 import '../../../pages/auth/login_page.dart';
 import '../../../pages/auth/register_page.dart';
@@ -44,6 +45,8 @@ class NavigationRouteManager {
         return _navigationToDefault(const QrListPage(), args);
       case NavigationConstant.qrCreate:
         return _navigationToDefault(const QrCratePage(), args);
+      case NavigationConstant.indoorGameDetail:
+        return _navigationToDefault(const IndoorGameDetailPage(), args);
       default:
         return _navigationToDefault(const ErrorPage(), args);
     }

@@ -131,6 +131,8 @@ class _QrListPageState extends State<QrListPage> {
     var response = await IndoorGameService.instance.craeteGame(_gameModel);
     if (response != null) {
       _showError('Bir hata oluştu lütfen tekrar deneyiniz.');
+    } else {
+      NavigationManager.instance.navigationToPage(NavigationConstant.home);
     }
   }
 
