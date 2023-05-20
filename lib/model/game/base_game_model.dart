@@ -22,9 +22,9 @@ class BaseGameModel extends BaseModel {
     date = json['date'].toString();
     description = json['description'].toString();
     organizerUid = json['organizerUid'].toString();
-    participantsUid = List<String>.from(json['participantsUid']);
+    participantsUid = json['participantsUid'] != null ? List<String>.from(json['participantsUid']) : [];
     rules = json['rules'].toString();
-    title = json['title'].toString();
+    title = json['title'].toString(); 
   }
 
   @override

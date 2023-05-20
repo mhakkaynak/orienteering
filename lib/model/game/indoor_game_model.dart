@@ -20,9 +20,9 @@ class IndoorGameModel extends BaseGameModel {
         );
 
   IndoorGameModel._fromJson(o) {
-    super.fromJson(o);
     qrList = Map<String, String>.from(o['qrList']);
-    location = o['location'];
+    location = o['location'].toString();
+    super.fromJson(o);
   }
 
   @override
