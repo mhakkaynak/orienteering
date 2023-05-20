@@ -3,8 +3,8 @@ mixin NavigationConstant {
   static const auth = '/auth';
   static const error = '/error';
   static const eventList = '/eventList';
-  static const home = '/home';
-  static const indoorCrateGame = '/';
+  static const home = '/';
+  static const indoorCreateGame = '/indoorCreateGame';
   static const login = '/login';
   static const qrCreate = '/qrCreate';
   static const qrList = '/qrList';

@@ -41,7 +41,7 @@ class IndoorCraeteGame extends StatelessWidget {
         },
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: context.customWidthValue(0.34),
+            horizontal: context.customWidthValue(0.16),
           ),
           child: const Text('İlerle'),
         ),
@@ -85,6 +85,7 @@ class IndoorCraeteGame extends StatelessWidget {
           date: _dateTextController.text,
           description: _descriptionTextController.text,
           rules: _rulesTextController.text,
+          location: _locationTextController.text,
           title: _titleTextController.text);
       NavigationManager.instance
           .navigationToPage(NavigationConstant.qrList, args: model);

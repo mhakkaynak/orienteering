@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/core/constants/navigation/navigation_constant.dart';
-import 'package:orienteering/core/extensions/context_extension.dart';
-import 'package:orienteering/core/init/navigation/navigation_manager.dart';
-import 'package:orienteering/model/game/indoor_game_model.dart';
+import 'package:orienteering/service/game/indoor/indoor_game_service.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+
+import '../../../../core/constants/navigation/navigation_constant.dart';
+import '../../../../core/extensions/context_extension.dart';
+import '../../../../core/init/navigation/navigation_manager.dart';
+import '../../../../model/game/indoor_game_model.dart';
+import '../../../../widgets/snack_bars/error_snack_bar.dart';
 
 class QrListPage extends StatefulWidget {
   const QrListPage({super.key});
@@ -22,9 +25,7 @@ class _QrListPageState extends State<QrListPage> {
       var data = ModalRoute.of(context)?.settings.arguments;
       if (data is IndoorGameModel) {
         _gameModel = data;
-      } else if (data is Map<String, String>) {
-        _qrList = data;
-        setState(() {});
+        _qrList = _gameModel.qrList ?? {};
       }
     });
 
@@ -34,31 +35,33 @@ class _QrListPageState extends State<QrListPage> {
   Padding _buildBody() {
     return Padding(
       padding: context.paddingNormalSymmetric,
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          childAspectRatio: 1,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
-        ),
-        itemCount: _qrList.length + 1,
-        itemBuilder: (BuildContext _, index) {
-          bool isQr = index < _qrList.length;
-          return _buildFab(index, isQr);
-        },
-      ),
+      child: _buildQrList(),
     );
   }
 
-  FloatingActionButton _buildFab(int index, bool isQr) {
-    return FloatingActionButton(
-      heroTag: 'btn$index',
-      onPressed: () {
-        _fabOnPressed(isQr, index);
+  GridView _buildQrList() {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 200,
+        childAspectRatio: 1,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
+      ),
+      itemCount: _qrList.length + 1,
+      itemBuilder: (BuildContext _, index) {
+        bool isQr = index < _qrList.length;
+        return _buildFab(index, isQr);
       },
-      child: isQr ? _buildQrColumn(index) : const Icon(Icons.add_outlined),
     );
   }
+
+  FloatingActionButton _buildFab(int index, bool isQr) => FloatingActionButton(
+        heroTag: 'btn$index',
+        onPressed: () {
+          _fabOnPressed(isQr, index);
+        },
+        child: isQr ? _buildQrColumn(index) : const Icon(Icons.add_outlined),
+      );
 
   void _fabOnPressed(bool isQr, int index) {
     if (isQr) {
@@ -68,7 +71,7 @@ class _QrListPageState extends State<QrListPage> {
       );
     } else {
       NavigationManager.instance
-          .navigationToPage(NavigationConstant.qrCreate, args: _qrList);
+          .navigationToPage(NavigationConstant.qrCreate, args: _gameModel);
     }
   }
 
@@ -90,9 +93,11 @@ class _QrListPageState extends State<QrListPage> {
   AlertDialog _buildAlertDialog(int index) {
     return AlertDialog(
       backgroundColor: context.colors.secondaryContainer,
-      title: Text('Qr Kod Sil'),
-      content: Text('Bu Qr kod silinsin mi?'),
-      actions: [_buildAlertIconButton(index)],
+      title: const Text('Qr Kod Sil'),
+      content: const Text('Bu Qr kod silinsin mi?'),
+      actions: [
+        _buildAlertIconButton(index),
+      ],
     );
   }
 
@@ -121,7 +126,20 @@ class _QrListPageState extends State<QrListPage> {
     );
   }
 
-  void _createGame() {}
+  Future<void> _createGame() async {
+    _gameModel.qrList = _qrList;
+    var response = await IndoorGameService.instance.craeteGame(_gameModel);
+    if (response != null) {
+      _showError('Bir hata oluştu lütfen tekrar deneyiniz.');
+    }
+  }
+
+  void _showError(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
+      context: context,
+      text: text,
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {

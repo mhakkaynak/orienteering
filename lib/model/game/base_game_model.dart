@@ -29,6 +29,7 @@ class BaseGameModel extends BaseModel {
 
   @override
   Map<String, dynamic> toJson() => {
+        'date': date,
         'description': description,
         'organizerUid': organizerUid,
         'participantsUid': participantsUid,

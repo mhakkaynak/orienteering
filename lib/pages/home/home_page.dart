@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orienteering/pages/game/game_create_home_page.dart';
 import '../game/indoor/create_game/qr_create_page.dart';
 
 import 'subpages/home_subpage.dart';
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return const HomeSubpage();
       case 1:
-        return const QrCratePage();
+        return const GameCreateHomePage();
       case 2:
         return const UserPage();
       default:
