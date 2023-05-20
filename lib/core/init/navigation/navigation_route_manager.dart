@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:orienteering/pages/auth/auth_page.dart';
 import 'package:orienteering/pages/error/error_page.dart';
+import 'package:orienteering/pages/game/indoor/create_game/indoor_create_game_page.dart';
+import 'package:orienteering/pages/game/indoor/create_game/qr_create_page.dart';
+import 'package:orienteering/pages/game/indoor/create_game/qr_list_page.dart';
 import 'package:orienteering/pages/home/home_page.dart';
 import 'package:orienteering/pages/home/subpages/event_list_subpage.dart';
 import 'package:orienteering/pages/user/user_edit_page.dart';
@@ -35,6 +38,12 @@ class NavigationRouteManager {
         return _navigationToDefault(const UserEditPage(), args);
       case NavigationConstant.eventList:
         return _navigationToDefault(const EventListSubpage(), args);
+      case NavigationConstant.indoorCreateGame:
+        return _navigationToDefault(IndoorCraeteGame(), args);
+      case NavigationConstant.qrList:
+        return _navigationToDefault(const QrListPage(), args);
+      case NavigationConstant.qrCreate:
+        return _navigationToDefault(const QrCratePage(), args);
       default:
         return _navigationToDefault(const ErrorPage(), args);
     }

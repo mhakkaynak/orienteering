@@ -9,6 +9,8 @@ import '../../core/init/navigation/navigation_manager.dart';
 class UserService extends BaseUserService {
   UserService._init() : super();
 
+  String? uid = FirebaseAuthManager.instance.uid;
+
   static UserService? _instance;
 
   static UserService get instance {
@@ -19,9 +21,8 @@ class UserService extends BaseUserService {
   Future<UserModel> getUser() async {
     UserModel user = UserModel.empty();
     try {
-      String? uid = FirebaseAuthManager.instance.uid;
       if (uid != null) {
-        user = await super.firestoreManager.get(uid, model: user) as UserModel;
+        user = await super.firestoreManager.get(uid!, model: user) as UserModel;
         var data = await LocationService.instance // get city name
             .getCityWithLicensePlate(user.city ?? 0);
         user.cityString = data;

@@ -8,6 +8,7 @@ import '../../model/user/user_model.dart';
 
 class UserAuthService extends BaseUserService {
   UserAuthService._init() : super();
+
   static UserAuthService? _instance;
 
   final _errorText = 'Hata: Lütfen tekrar deneyiniz.';
