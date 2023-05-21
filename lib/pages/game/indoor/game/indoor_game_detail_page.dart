@@ -156,8 +156,9 @@ class _IndoorGameDetailPageState extends State<IndoorGameDetailPage> {
   ElevatedButton _buildStartGame() {
     return ElevatedButton(
       onPressed: () {
-        NavigationManager.instance
-            .navigationToPageClear(NavigationConstant.organizerPanel);
+        NavigationManager.instance.navigationToPage(
+            NavigationConstant.organizerPanel,
+            args: 'indoor-${_game.title}');
       },
       child: const Text('Oyunu başlat'),
     );
