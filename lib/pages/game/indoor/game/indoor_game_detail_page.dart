@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/core/constants/navigation/navigation_constant.dart';
-import 'package:orienteering/core/extensions/context_extension.dart';
-import 'package:orienteering/core/init/navigation/navigation_manager.dart';
-import 'package:orienteering/model/game/indoor_game_model.dart';
-import 'package:orienteering/service/game/indoor/indoor_game_service.dart';
-import 'package:orienteering/service/user/user_service.dart';
+import '../../../../core/constants/navigation/navigation_constant.dart';
+import '../../../../core/extensions/context_extension.dart';
+import '../../../../core/init/navigation/navigation_manager.dart';
+import '../../../../model/game/indoor_game_model.dart';
+import '../../../../service/game/indoor/indoor_game_service.dart';
+import '../../../../service/user/user_service.dart';
 
 class IndoorGameDetailPage extends StatefulWidget {
   const IndoorGameDetailPage({super.key});
@@ -74,6 +74,9 @@ class _IndoorGameDetailPageState extends State<IndoorGameDetailPage> {
               onPressed: () async {
                 IndoorGameService.instance.joinGame(_game);
                 setState(() {});
+                NavigationManager.instance.navigationToPage(
+                    NavigationConstant.indoorGame,
+                    args: 'indoor-${_game.title}');
               },
               child: const Text('Katıl')),
         ],
@@ -145,7 +148,7 @@ class _IndoorGameDetailPageState extends State<IndoorGameDetailPage> {
     String organizerUid = _game.organizerUid.toString();
     if (userUid == organizerUid) {
       return _buildStartGame();
-    } else if (_game.participantsUid != null &&
+    } else if (_game.participantsUid != null && 
         _game.participantsUid!.contains(userUid)) {
       return _buildCancelButton();
     } else {
