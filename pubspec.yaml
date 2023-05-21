@@ -41,6 +41,7 @@ dependencies:
   intl: ^0.18.1
   mobx: ^2.1.4
   permission_handler: ^10.2.0
+  qr_code_scanner: ^1.0.1
   qr_flutter: ^4.1.0
   screenshot: ^2.1.0
 

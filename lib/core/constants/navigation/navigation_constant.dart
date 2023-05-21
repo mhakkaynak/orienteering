@@ -12,4 +12,5 @@ mixin NavigationConstant {
   static const qrList = '/qrList';
   static const register = '/register';
   static const userEdit = '/userEdit';
+  static const indoorGame = '/indoorGame';
 }

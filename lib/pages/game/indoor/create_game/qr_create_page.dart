@@ -129,12 +129,15 @@ class _QrCratePageState extends State<QrCratePage> {
     var value = _qrInfoTextController.text;
     if (key.isNotEmpty && value.isNotEmpty) {
       if (_qrList[key] == null) {
-        await _screenShoot();
         var data = {key: value};
         _qrList.addAll(data);
         _gameModel.qrList = _qrList;
+        setState(() {
+          _qrInfoTextController.text = '$key|$value';
+        });
+        await _screenShoot();
         NavigationManager.instance
-            .navigationToPageClear(NavigationConstant.qrList, args: _gameModel); 
+            .navigationToPageClear(NavigationConstant.qrList, args: _gameModel);
       } else {
         _showError('Aynı isimde birden fazla qr eklenemez.');
       }

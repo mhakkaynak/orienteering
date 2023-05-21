@@ -33,16 +33,16 @@ class _QrListPageState extends State<QrListPage> {
 
   Padding _buildBody() {
     return Padding(
-      padding: context.paddingNormalSymmetric,
+      padding: context.paddingLowSymmetric,
       child: _buildQrList(),
     );
   }
 
   GridView _buildQrList() {
     return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 200,
-        childAspectRatio: 1,
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: context.customWidthValue(0.5),
+        childAspectRatio: 3 / 3,
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
       ),
