@@ -86,25 +86,21 @@ class _HomeSubpageState extends State<HomeSubpage> {
         itemBuilder: (BuildContext context, int index) {
           var indoorGame = _indoorGameList[index];
           return _buildGameContainer(
-              context,
-              indoorGame.date.toString(),
-              indoorGame.title.toString(),
-              indoorGame.location.toString(),
-              NavigationConstant.indoorGameDetail);
+              context, indoorGame, NavigationConstant.indoorGameDetail);
         },
       ),
     );
   }
 
-  GestureDetector _buildGameContainer(BuildContext context, String dateText,
-          String titleText, String locationText, String route) =>
+  GestureDetector _buildGameContainer(
+          BuildContext context, IndoorGameModel game, String route) =>
       GameContainer(
         context: context,
-        dateText: dateText,
-        titleText: titleText,
-        locationText: locationText,
+        dateText: game.date.toString(),
+        titleText: game.title.toString(),
+        locationText: game.location.toString(),
         onTap: () {
-          NavigationManager.instance.navigationToPage(route);
+          NavigationManager.instance.navigationToPage(route, args: game);
         },
       );
 

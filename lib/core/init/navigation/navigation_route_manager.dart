@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orienteering/pages/game/organizer_panel_page.dart';
 import '../../../pages/auth/auth_page.dart';
 import '../../../pages/error/error_page.dart';
 import '../../../pages/game/indoor/create_game/indoor_create_game_page.dart';
@@ -47,6 +48,8 @@ class NavigationRouteManager {
         return _navigationToDefault(const QrCratePage(), args);
       case NavigationConstant.indoorGameDetail:
         return _navigationToDefault(const IndoorGameDetailPage(), args);
+      case NavigationConstant.organizerPanel:
+        return _navigationToDefault(const OrganizerPanelPage(), args);
       default:
         return _navigationToDefault(const ErrorPage(), args);
     }
