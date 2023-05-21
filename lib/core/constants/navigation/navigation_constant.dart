@@ -7,6 +7,7 @@ mixin NavigationConstant {
   static const indoorCreateGame = '/indoorCreateGame';
   static const indoorGameDetail = '/indoorGameDetail';
   static const login = '/login';
+  static const organizerPanel = '/organizerPanel';
   static const qrCreate = '/qrCreate';
   static const qrList = '/qrList';
   static const register = '/register';

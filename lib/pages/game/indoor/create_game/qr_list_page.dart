@@ -28,7 +28,6 @@ class _QrListPageState extends State<QrListPage> {
         _qrList = _gameModel.qrList ?? {};
       }
     });
-
     super.initState();
   }
 
