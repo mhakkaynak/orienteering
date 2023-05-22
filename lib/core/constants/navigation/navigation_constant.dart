@@ -6,6 +6,7 @@ mixin NavigationConstant {
   static const home = '/';
   static const indoorCreateGame = '/indoorCreateGame';
   static const indoorGameDetail = '/indoorGameDetail';
+  static const outdoorMapPage = '/outdoorCreateGame';
   static const login = '/login';
   static const organizerPanel = '/organizerPanel';
   static const qrCreate = '/qrCreate';

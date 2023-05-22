@@ -14,18 +14,16 @@ class GameCreateHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Oluşturacağınız Oyun Tipini Seçiniz',
-                style: context.textTheme.titleSmall),
+            Text('Oluşturacağınız Oyun Tipini Seçiniz', style: context.textTheme.titleSmall),
             SizedBox(height: 80),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildContainer(
-                    context, 'Indoor', NavigationConstant.indoorCreateGame),
+                _buildContainer(context, 'Indoor', NavigationConstant.indoorCreateGame),
                 SizedBox(
                   width: 10,
                 ),
-                _buildContainer(context, 'Outdoor', NavigationConstant.error),
+                _buildContainer(context, 'Outdoor', NavigationConstant.outdoorMapPage),
               ],
             )
           ],
@@ -34,8 +32,7 @@ class GameCreateHomePage extends StatelessWidget {
     );
   }
 
-  GestureDetector _buildContainer(
-      BuildContext context, String text, String route) {
+  GestureDetector _buildContainer(BuildContext context, String text, String route) {
     return GestureDetector(
       onTap: () {
         NavigationManager.instance.navigationToPage(route);
