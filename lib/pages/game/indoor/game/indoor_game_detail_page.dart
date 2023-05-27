@@ -34,7 +34,11 @@ class _IndoorGameDetailPageState extends State<IndoorGameDetailPage> {
 
   Column _buildColumn() => Column(
         children: [
-          const SizedBox(height: 200, child: Placeholder()),
+          Image.network(
+            _game.imagePath ?? 'https://picsum.photos/200/300',
+            width: context.customWidthValue(0.64),
+            height: context.normalHeightValue * 1.5,
+          ),
           SizedBox(height: context.lowWidthValue * 1.5),
           Text(
             _game.title.toString(),
@@ -148,7 +152,7 @@ class _IndoorGameDetailPageState extends State<IndoorGameDetailPage> {
     String organizerUid = _game.organizerUid.toString();
     if (userUid == organizerUid) {
       return _buildStartGame();
-    } else if (_game.participantsUid != null && 
+    } else if (_game.participantsUid != null &&
         _game.participantsUid!.contains(userUid)) {
       return _buildCancelButton();
     } else {

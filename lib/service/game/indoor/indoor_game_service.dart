@@ -1,22 +1,22 @@
-import 'dart:ffi';
-
-import 'package:orienteering/core/init/firebase/firestore_manager.dart';
-import 'package:orienteering/core/init/navigation/navigation_manager.dart';
-import 'package:orienteering/model/game/game_statistics_model.dart';
-import 'package:orienteering/model/game/indoor_game_model.dart';
-import 'package:orienteering/service/game/game_statistics_service.dart';
-import 'package:orienteering/service/user/user_service.dart';
+import '../../../core/init/firebase/firebase_stroge_manager.dart';
+import '../../../core/init/firebase/firestore_manager.dart';
+import '../../../core/init/navigation/navigation_manager.dart';
+import '../../../model/game/indoor_game_model.dart';
+import '../game_statistics_service.dart';
+import '../../user/user_service.dart';
 
 import '../../../core/constants/navigation/navigation_constant.dart';
 
 class IndoorGameService {
   IndoorGameService._init() {
     _indoorGameFirestoreManager = FirestoreManager('indoor');
+    _strogeManager = StrogeManager('indoorGame');
   }
 
   static IndoorGameService? _instance;
 
   late final FirestoreManager _indoorGameFirestoreManager;
+  late final StrogeManager _strogeManager;
 
   static IndoorGameService get instance {
     _instance ??= IndoorGameService._init();
@@ -26,7 +26,9 @@ class IndoorGameService {
   Future<String?> craeteGame(IndoorGameModel model) async {
     try {
       model.organizerUid = UserService.instance.uid;
-      _indoorGameFirestoreManager.insert(model, model.title!);
+      await _strogeManager.addImage(
+          model.title.toString(), model.imagePath.toString());
+      await _indoorGameFirestoreManager.insert(model, model.title!);
     } catch (e) {
       return e.toString();
     }
@@ -39,6 +41,10 @@ class IndoorGameService {
       var data = await _indoorGameFirestoreManager.getAll(
           model: IndoorGameModel.empty(), order: 'date');
       games = List<IndoorGameModel>.from(data);
+      for (var i = 0; i < games.length; i++) {
+        games[i].imagePath =
+            await _strogeManager.getImage(games[i].title.toString());
+      }
     } catch (e) {
       NavigationManager.instance
           .navigationToPageClearWithDelay(NavigationConstant.error);
@@ -62,16 +68,6 @@ class IndoorGameService {
     }
   }
 
-  Future<void> _addUserToGameStatistics(
-      String title, String uid, List<String> keys) async {
-    try {
-      GameStatisticsService service = GameStatisticsService('indoor-$title');
-      await service.insert(uid, keys);
-    } catch (e) {
-      rethrow;
-    }
-  }
-
   Future<void> removeUser(IndoorGameModel model) async {
     try {
       String? uid = UserService.instance.uid;
@@ -80,6 +76,16 @@ class IndoorGameService {
     } catch (e) {
       NavigationManager.instance
           .navigationToPageClearWithDelay(NavigationConstant.error);
+    }
+  }
+
+  Future<void> _addUserToGameStatistics(
+      String title, String uid, List<String> keys) async {
+    try {
+      GameStatisticsService service = GameStatisticsService('indoor-$title');
+      await service.insert(uid, keys);
+    } catch (e) {
+      rethrow;
     }
   }
 }

@@ -49,7 +49,6 @@ class FirestoreManager {
       return querySnapshot.docs
           .map((doc) => model != null ? model.fromJson(doc.data()) : doc.data())
           .toList();
-      ;
     } catch (e) {
       rethrow;
     }
