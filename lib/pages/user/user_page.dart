@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orienteering/core/constants/navigation/navigation_constant.dart';
 import 'package:orienteering/core/init/navigation/navigation_manager.dart';
 import 'package:orienteering/service/user/user_auth_service.dart';
+import 'package:orienteering/widgets/images/user_profile_image.dart';
 
 import '../../core/extensions/context_extension.dart';
 import '../../core/extensions/string_extension.dart';
@@ -24,7 +25,7 @@ class _UserPageState extends State<UserPage> {
     _init();
     super.initState();
   }
-  
+
   Padding _buildLogOutButton(BuildContext context) => Padding(
         padding: context.paddingNormalSymmetric,
         child: FilledButton(
@@ -101,14 +102,6 @@ class _UserPageState extends State<UserPage> {
         ],
       );
 
-  Center _buildUserPicture() => const Center(
-        child: CircleAvatar(
-          minRadius: 75,
-          maxRadius: 75,
-          backgroundColor: Colors.black54,
-        ),
-      );
-
   Future<void> _init() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _user = await UserService.instance.getUser();
@@ -138,7 +131,10 @@ class _UserPageState extends State<UserPage> {
           ),
           child: ListView(
             children: [
-              _buildUserPicture(),
+              Container(
+                alignment: Alignment.center,
+                child: UserProfileImage(imagePath: _user.imagePath),
+              ),
               _buildSizedBoxLowHeight(context),
               _buildUserNameText(context),
               _buildSizedBoxLowHeight(context),

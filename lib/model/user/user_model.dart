@@ -8,8 +8,9 @@ class UserModel extends BaseModel {
     this.uid,
     this.coin,
     this.level,
-    this.gender,
-  );
+    this.gender, {
+    this.imagePath,
+  });
 
   UserModel._fromJson(o) {
     userName = o['userName'];
@@ -19,6 +20,7 @@ class UserModel extends BaseModel {
     coin = int.tryParse(o['coin'].toString());
     level = double.tryParse(o['level'].toString());
     gender = o['gender'];
+    imagePath = o['imagePath'];
   }
 
   @override
@@ -33,14 +35,15 @@ class UserModel extends BaseModel {
   });
 
   int? city;
+  String cityString = 'Kocaeli';
   int? coin;
   String? email;
   String? gender;
+  String? imagePath;
   double? level;
   String? password;
   String? uid;
   String? userName;
-  String cityString = 'Kocaeli';
 
   @override
   Map<String, dynamic> toJson() => {

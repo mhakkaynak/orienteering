@@ -4,6 +4,7 @@ class BaseGameModel extends BaseModel {
   BaseGameModel({
     this.date,
     this.description,
+    this.imagePath,
     this.organizerUid,
     this.participantsUid,
     this.rules,
@@ -12,6 +13,7 @@ class BaseGameModel extends BaseModel {
 
   String? date;
   String? description;
+  String? imagePath;
   String? organizerUid;
   List<String>? participantsUid;
   String? rules;
@@ -21,10 +23,13 @@ class BaseGameModel extends BaseModel {
   fromJson(json) {
     date = json['date'].toString();
     description = json['description'].toString();
+    imagePath = json['imagePath'].toString();
     organizerUid = json['organizerUid'].toString();
-    participantsUid = json['participantsUid'] != null ? List<String>.from(json['participantsUid']) : [];
+    participantsUid = json['participantsUid'] != null
+        ? List<String>.from(json['participantsUid'])
+        : [];
     rules = json['rules'].toString();
-    title = json['title'].toString(); 
+    title = json['title'].toString();
   }
 
   @override

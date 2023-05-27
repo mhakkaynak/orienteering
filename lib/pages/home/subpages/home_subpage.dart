@@ -35,7 +35,7 @@ class _HomeSubpageState extends State<HomeSubpage> {
     });
   }
 
-  Padding _buildBody(BuildContext context) {
+  Padding _buildBody() {
     return Padding(
       padding: context.paddingLowSymmetric,
       child: ListView(
@@ -51,20 +51,6 @@ class _HomeSubpageState extends State<HomeSubpage> {
           SizedBox(
             height: context.lowHeightValue,
           ),
-          _indoorGameList != []
-              ? _buildIndoorGameList(context)
-              : const SizedBox(),
-        ],
-      ),
-    );
-  }
-
-  SizedBox _buildIndoorGameList(BuildContext context) {
-    return SizedBox(
-      height: context.customHeightValue(0.36),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
           Text(
             'Indoor Oyunlar',
             style: context.textTheme.titleSmall,
@@ -72,14 +58,15 @@ class _HomeSubpageState extends State<HomeSubpage> {
           SizedBox(
             height: context.lowHeightValue * 0.4,
           ),
-          _buildListView(),
+          _buildListView()
         ],
       ),
     );
   }
 
-  Expanded _buildListView() {
-    return Expanded(
+  SizedBox _buildListView() {
+    return SizedBox(
+      height: context.customHeightValue(0.3),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: _indoorGameList.length,
@@ -93,16 +80,18 @@ class _HomeSubpageState extends State<HomeSubpage> {
   }
 
   GestureDetector _buildGameContainer(
-          BuildContext context, IndoorGameModel game, String route) =>
-      GameContainer(
-        context: context,
-        dateText: game.date.toString(),
-        titleText: game.title.toString(),
-        locationText: game.location.toString(),
-        onTap: () {
-          NavigationManager.instance.navigationToPage(route, args: game);
-        },
-      );
+      BuildContext context, IndoorGameModel game, String route) {
+    return GameContainer(
+      context: context,
+      dateText: game.date.toString(),
+      imagePath: game.imagePath ?? 'https://picsum.photos/200/300',
+      titleText: game.title.toString(),
+      locationText: game.location.toString(),
+      onTap: () {
+        NavigationManager.instance.navigationToPage(route, args: game);
+      },
+    );
+  }
 
   Row _buildCityRow(BuildContext context) {
     return Row(
@@ -134,7 +123,7 @@ class _HomeSubpageState extends State<HomeSubpage> {
     );
   }
 
-  PreferredSize _buildAppBar(BuildContext context) {
+  PreferredSize _buildAppBar() {
     return PreferredSize(
       preferredSize: Size.fromHeight(context.customHeightValue(0.09)),
       child: Padding(
@@ -156,8 +145,8 @@ class _HomeSubpageState extends State<HomeSubpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(context),
-      body: _buildBody(context),
+      appBar: _buildAppBar(),
+      body: _buildBody(),
     );
   }
 }

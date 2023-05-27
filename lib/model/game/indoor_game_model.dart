@@ -10,6 +10,7 @@ class IndoorGameModel extends BaseGameModel {
     List<String>? participantsUid,
     required String rules,
     required String title,
+    required String imagePath,
   }) : super(
           date: date,
           description: description,
@@ -17,6 +18,7 @@ class IndoorGameModel extends BaseGameModel {
           participantsUid: participantsUid,
           rules: rules,
           title: title,
+          imagePath: imagePath,
         );
 
   IndoorGameModel._fromJson(o) {

@@ -1,5 +1,8 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:orienteering/widgets/buttons/image_button.dart';
+import 'package:orienteering/widgets/images/user_profile_image.dart';
 import '../../core/constants/navigation/navigation_constant.dart';
 import '../../core/extensions/string_extension.dart';
 import '../../widgets/buttons/enabled_text_form_field_button.dart';
@@ -27,7 +30,7 @@ class _UserEditPageState extends State<UserEditPage> {
   late int _licensePlate;
   UserModel _user = UserModel.empty();
   final TextEditingController _userNameController = TextEditingController();
-
+  String? _imagePath;
   @override
   void initState() {
     _init();
@@ -69,6 +72,7 @@ class _UserEditPageState extends State<UserEditPage> {
     _user.userName = _userNameController.text;
     _user.gender = _gender;
     _user.city = _licensePlate + 1;
+    _user.imagePath = _imagePath;
     var response = await UserService.instance.updateUser(_user);
     if (response != '' && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
@@ -80,13 +84,36 @@ class _UserEditPageState extends State<UserEditPage> {
     }
   }
 
+  Future<void> _addImage() async {
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: FileType.custom,
+      allowedExtensions: ['png', 'jpeg'],
+    );
+    if (result == null && context.mounted) {
+      _showSnackBar(
+          'Hata: resim yükleme aşamasında hata oldu. Lütfen tekrar deneyiniz.');
+    } else {
+      setState(() {
+        _imagePath = result!.files.single.path;
+      });
+    }
+  }
+
+  void _showSnackBar(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
+      context: context,
+      text: text,
+    ));
+  }
+
   Column _buildColumn(BuildContext context) => Column(
         children: [
-          const CircleAvatar(
-            // TODO: duzeltilecek
-            minRadius: 75,
-            maxRadius: 75,
-            backgroundColor: Colors.black54,
+          ImageButton(
+            context: context,
+            color: Colors.transparent,
+            onTap: _addImage,
+            child: UserProfileImage(imagePath: _user.imagePath),
           ),
           SizedBox(height: context.lowHeightValue),
           UserNameTextFormField(controller: _userNameController),
@@ -98,16 +125,18 @@ class _UserEditPageState extends State<UserEditPage> {
               onTap: _coinOnTap),
           SizedBox(height: context.lowHeightValue * 0.5),
           EnabledTextFormFieldButton(
-              context: context,
-              text: 'Cinsiyet: $_gender',
-              icon: _gender.toString().toIcon!,
-              onTap: _genderOnTap),
+            context: context,
+            text: 'Cinsiyet: $_gender',
+            icon: _gender.toString().toIcon!,
+            onTap: _genderOnTap,
+          ),
           SizedBox(height: context.lowHeightValue * 0.5),
           EnabledTextFormFieldButton(
-              context: context,
-              text: 'Şehir: ${_cities[_licensePlate]}',
-              icon: Icons.location_city_outlined,
-              onTap: _cityOnTap),
+            context: context,
+            text: 'Şehir: ${_cities[_licensePlate]}',
+            icon: Icons.location_city_outlined,
+            onTap: _cityOnTap,
+          ),
         ],
       );
 

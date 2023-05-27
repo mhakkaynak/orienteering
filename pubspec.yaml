@@ -30,17 +30,19 @@ environment:
 dependencies:
   cloud_firestore: ^4.5.2
   cupertino_icons: ^1.0.2
+  file_picker: ^5.3.2
   firebase_auth: ^4.4.2
   firebase_core: ^2.10.0
-  google_maps_flutter: ^2.2.6
-  location: ^4.4.0
+  firebase_storage: ^11.2.1
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.4
+  google_maps_flutter: ^2.2.6
   google_nav_bar: ^5.0.6
   google_sign_in: ^6.1.0
   image_gallery_saver: ^1.7.1
   intl: ^0.18.1
+  location: ^4.4.0
   mobx: ^2.1.4
   permission_handler: ^10.2.0
   qr_code_scanner: ^1.0.1
