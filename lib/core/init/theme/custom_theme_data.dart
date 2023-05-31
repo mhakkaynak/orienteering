@@ -37,6 +37,7 @@ class CustomThemeData {
   }
 
   ThemeData get theme => ThemeData.light(useMaterial3: true).copyWith(
+    appBarTheme: AppBarTheme(scrolledUnderElevation: 0.0, elevation:  0.0),
         primaryColor: const Color(0xFF326b23),
         colorScheme: _colorScheme,
         textTheme: ThemeData.light().textTheme.copyWith(

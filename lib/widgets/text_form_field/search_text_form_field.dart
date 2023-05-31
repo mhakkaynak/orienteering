@@ -10,6 +10,7 @@ class SearchTextFormField extends TextFormField {
           controller: controller,
           decoration: InputDecoration(
             filled: false,
+            hintText: 'Ara',
             enabledBorder: _inputBorder,
             focusedBorder: _inputBorder,
             suffixIcon: IconButton(

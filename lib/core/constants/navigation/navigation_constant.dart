@@ -1,9 +1,9 @@
 // The paths of the pages are set here
 mixin NavigationConstant {
-  static const auth = '/auth';
+  static const auth = '/';
   static const error = '/error';
   static const eventList = '/eventList';
-  static const home = '/';
+  static const home = '/home';
   static const indoorCreateGame = '/indoorCreateGame';
   static const indoorGame = '/indoorGame';
   static const indoorGameDetail = '/indoorGameDetail';
