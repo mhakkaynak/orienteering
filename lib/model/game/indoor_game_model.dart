@@ -3,7 +3,7 @@ import 'base_game_model.dart';
 class IndoorGameModel extends BaseGameModel {
   IndoorGameModel({
     this.qrList,
-    this.location,
+    String? location,
     required String date,
     required String description,
     String? organizerUid,
@@ -32,7 +32,6 @@ class IndoorGameModel extends BaseGameModel {
 
   IndoorGameModel.empty();
 
-  String? location;
   Map<String, String>? qrList;
 
   @override

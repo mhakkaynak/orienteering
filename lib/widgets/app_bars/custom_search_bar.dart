@@ -38,7 +38,7 @@ class CustomSearchBar extends Align {
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.only(left: context.customWidthValue(0.57)),
+                          EdgeInsets.only(left: context.customWidthValue(0.60)),
                       child: rightWidget,
                     ),
                   ],

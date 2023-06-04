@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/navigation/navigation_constant.dart';
+import '../../../core/init/navigation/navigation_manager.dart';
+import '../../../model/game/base_game_model.dart';
 
 import '../../../core/extensions/context_extension.dart';
+import '../../../model/game/indoor_game_model.dart';
+import '../../../service/game/indoor/indoor_game_service.dart';
 import '../../../widgets/card/game_card.dart';
 import '../../../widgets/text_form_field/search_text_form_field.dart';
 
-// TODO: etkinlik datası için fonksiyon yazıldığında burası tamamlanacak.
 class EventListSubpage extends StatefulWidget {
   const EventListSubpage({super.key});
 
@@ -13,54 +17,102 @@ class EventListSubpage extends StatefulWidget {
 }
 
 class _EventListSubpageState extends State<EventListSubpage> {
+  final List<BaseGameModel> _gameList = [];
+  List<IndoorGameModel> _indoorGameList = [];
+  List<BaseGameModel> _searchGameList = [];
   final TextEditingController _searchTextController = TextEditingController();
 
-  AppBar _buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      shadowColor: Colors.transparent,
-      elevation: 0.0,
-      title: SearchTextFormField(
-          controller: _searchTextController,
-          cancelPressed: () {
-            setState(() {
-              _searchTextController.text = '';
-            });
-          }),
-    );
+  @override
+  void initState() {
+    super.initState();
+    _init();
   }
 
-  Padding _buildBody(BuildContext context) {
-    return Padding(
-      padding: context.paddingLowSymmetric,
-      child: Column(
-        children: [
-          const Divider(),
-          Expanded(
-            child: Padding(
-              padding: context.paddingLowSymmetric,
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (BuildContext context, int index) {
-                  return _buildCard();
-                },
+  Future<void> _init() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _indoorGameList = await IndoorGameService.instance.getAllGames()
+          as List<IndoorGameModel>;
+      _gameList.addAll(_indoorGameList);
+      setState(() {});
+    });
+  }
+
+  AppBar _buildAppBar() => AppBar(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        elevation: 0.0,
+        title: SearchTextFormField(
+          controller: _searchTextController,
+          onChanged: _searchOnChanged,
+          cancelPressed: _searchCancelPressed,
+        ),
+      );
+
+  void _searchCancelPressed() {
+    setState(() {
+      _searchTextController.text = '';
+      FocusManager.instance.primaryFocus?.unfocus();
+      _searchGameList = [];
+      setState(() {});
+    });
+  }
+
+  _searchOnChanged(text) {
+    _searchGameList = [];
+    for (var element in _gameList) {
+      if (element.title!.contains(text)) {
+        _searchGameList.add(element);
+      }
+    }
+    setState(() {});
+  }
+
+  Padding _buildBody(BuildContext context) => Padding(
+        padding: context.paddingLowSymmetric,
+        child: Column(
+          children: [
+            const Divider(),
+            Expanded(
+              child: Padding(
+                padding: context.paddingLowSymmetric,
+                child: _buildListView(),
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
+          ],
+        ),
+      );
 
-  GameCard _buildCard() => GameCard(
-      context: context,
-      imagePath:
-          'https://firebasestorage.googleapis.com/v0/b/orienteering-c1ddc.appspot.com/o/indoorGame%2Ftest?alt=media&token=2b139ebe-7526-446d-8515-93cf755e5ed7&_gl=1*1xvx6a1*_ga*MzczMzY1NDE2LjE2ODA5NTQ1MzA.*_ga_CW55HF8NVT*MTY4NTU2OTYxOS4xNy4xLjE2ODU1Njk2MjcuMC4wLjA.',
-      title: 'Title',
-      description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      location: 'Bursa',
-      date: '10.08.2023');
+  ListView _buildListView() => ListView.builder(
+        itemCount:
+            _searchGameList.isEmpty ? _gameList.length : _searchGameList.length,
+        itemBuilder: (BuildContext context, int index) {
+          List<BaseGameModel> list = [];
+          if (_searchGameList.isNotEmpty) {
+            list = _searchGameList;
+          } else {
+            list = _gameList;
+          }
+          String route = '';
+          if (index <= _indoorGameList.length) {
+            route = NavigationConstant.indoorGameDetail;
+          }
+          return _buildCard(list[index], route);
+        },
+      );
+
+  InkWell _buildCard(BaseGameModel model, String route) => InkWell(
+        onTap: () {
+          NavigationManager.instance.navigationToPage(route, args: model);
+        },
+        child: GameCard(
+          context: context,
+          imagePath: model.imagePath.toString(),
+          title: model.title.toString(),
+          description: model.description.toString(),
+          location: model.location.toString(),
+          date: model.date.toString(),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {

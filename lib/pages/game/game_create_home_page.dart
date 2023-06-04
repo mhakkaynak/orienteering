@@ -15,12 +15,12 @@ class GameCreateHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Oluşturacağınız Oyun Tipini Seçiniz', style: context.textTheme.titleSmall),
-            SizedBox(height: 80),
+            const SizedBox(height: 80),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildContainer(context, 'Indoor', NavigationConstant.indoorCreateGame),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 _buildContainer(context, 'Outdoor', NavigationConstant.outdoorMapPage),
