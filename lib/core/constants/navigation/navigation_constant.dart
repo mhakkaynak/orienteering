@@ -3,12 +3,14 @@ mixin NavigationConstant {
   static const auth = '/auth';
   static const error = '/error';
   static const eventList = '/eventList';
-  static const home = '/';
+  static const gameStatistics = '/';
+  static const home = '/home';
   static const indoorCreateGame = '/indoorCreateGame';
   static const indoorGame = '/indoorGame';
   static const indoorGameDetail = '/indoorGameDetail';
   static const login = '/login';
   static const organizerPanel = '/organizerPanel';
+  static const orienteeringExplanation = '/orienteeringExplantion';
   static const outdoorMapPage = '/outdoorCreateGame';
   static const qrCreate = '/qrCreate';
   static const qrList = '/qrList';

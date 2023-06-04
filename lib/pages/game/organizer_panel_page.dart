@@ -137,7 +137,6 @@ class _OrganizerPanelPageState extends State<OrganizerPanelPage> {
       List<GameStatisticsModel> gameStatisticsList) {
     List<TableRow> list = [];
     list.add(_buildTableRow(['Kullanıcı Adı', 'Puan'], index: 0));
-
     for (var model in gameStatisticsList) {
       int puan = 0;
       if (model.totalMark != null) {

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:orienteering/core/constants/navigation/navigation_constant.dart';
 import 'package:orienteering/core/extensions/context_extension.dart';
 import 'package:orienteering/model/game/game_statistics_model.dart';
 import 'package:orienteering/service/game/game_statistics_service.dart';
@@ -18,7 +19,7 @@ class IndoorGamePage extends StatefulWidget {
 class _IndoorGamePageState extends State<IndoorGamePage> {
   QRViewController? _controller;
   List<String> _flagList = [];
-  List<String> _foundFlagList = [];
+  final List<String> _foundFlagList = [];
   late final GameStatisticsService _gameStatisticService;
   GameStatisticsModel _gameStatisticsModel = GameStatisticsModel();
   String _gameTitle = '';
@@ -38,7 +39,7 @@ class _IndoorGamePageState extends State<IndoorGamePage> {
       setState(() {
         _gameTitle = data.toString();
       });
-    }); 
+    });
     _init();
     super.initState();
   }
@@ -55,7 +56,7 @@ class _IndoorGamePageState extends State<IndoorGamePage> {
 
   Future<void> _init() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _gameStatisticService = GameStatisticsService('indoor-test oyunu');
+      _gameStatisticService = GameStatisticsService(_gameTitle);
       _gameStatisticsModel = await _gameStatisticService.get();
       _flagList = _gameStatisticsModel.totalMark!.keys.toList();
       _gameStatisticsModel.startDate = DateTime.now().toString();
@@ -77,21 +78,30 @@ class _IndoorGamePageState extends State<IndoorGamePage> {
         });
         _gameStatisticsModel.totalMark![title] = DateTime.now().toString();
         if (_flagList.length == _foundFlagList.length) {
+          showDialog(
+            context: context,
+            builder: (_) => _buildAlertDialog('Oyun Bitti!', 'Tebrikler'),
+          );
           _gameStatisticsModel.endDate = DateTime.now().toString();
+          _gameStatisticService.update(_gameStatisticsModel);
+          NavigationManager.instance.navigationToPageClear(
+              NavigationConstant.gameStatistics,
+              args: _gameTitle);
+        } else {
+          showDialog(
+            context: context,
+            builder: (_) => _buildAlertDialog(info, 'İpucu'),
+          );
+          _gameStatisticService.update(_gameStatisticsModel);
         }
-        _gameStatisticService.update(_gameStatisticsModel);
-        showDialog(
-          context: context,
-          builder: (_) => _buildAlertDialog(info),
-        );
       }
     });
   }
 
-  AlertDialog _buildAlertDialog(String info) {
+  AlertDialog _buildAlertDialog(String info, String title) {
     return AlertDialog(
       backgroundColor: context.colors.secondaryContainer,
-      title: const Text('İpucu'),
+      title: Text(title),
       content: Text(info),
       actions: [
         IconButton(

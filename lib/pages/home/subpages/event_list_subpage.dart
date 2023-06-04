@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/core/extensions/context_extension.dart';
-import 'package:orienteering/widgets/text_form_field/search_text_form_field.dart';
+import '../../../core/constants/navigation/navigation_constant.dart';
+import '../../../core/init/navigation/navigation_manager.dart';
+import '../../../model/game/base_game_model.dart';
 
-// TODO: etkinlik datası için fonksiyon yazıldığında burası tamamlanacak.
+import '../../../core/extensions/context_extension.dart';
+import '../../../model/game/indoor_game_model.dart';
+import '../../../service/game/indoor/indoor_game_service.dart';
+import '../../../widgets/card/game_card.dart';
+import '../../../widgets/text_form_field/search_text_form_field.dart';
+
 class EventListSubpage extends StatefulWidget {
   const EventListSubpage({super.key});
 
@@ -11,41 +17,108 @@ class EventListSubpage extends StatefulWidget {
 }
 
 class _EventListSubpageState extends State<EventListSubpage> {
+  final List<BaseGameModel> _gameList = [];
+  List<IndoorGameModel> _indoorGameList = [];
+  List<BaseGameModel> _searchGameList = [];
   final TextEditingController _searchTextController = TextEditingController();
 
-  AppBar _buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      title: SearchTextFormField(
-          controller: _searchTextController,
-          cancelPressed: () {
-            setState(() {
-              _searchTextController.text = '';
-            });
-          }),
-    );
+  @override
+  void initState() {
+    super.initState();
+    _init();
   }
+
+  Future<void> _init() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _indoorGameList = await IndoorGameService.instance.getAllGames()
+          as List<IndoorGameModel>;
+      _gameList.addAll(_indoorGameList);
+      setState(() {});
+    });
+  }
+
+  AppBar _buildAppBar() => AppBar(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        elevation: 0.0,
+        title: SearchTextFormField(
+          controller: _searchTextController,
+          onChanged: _searchOnChanged,
+          cancelPressed: _searchCancelPressed,
+        ),
+      );
+
+  void _searchCancelPressed() {
+    setState(() {
+      _searchTextController.text = '';
+      FocusManager.instance.primaryFocus?.unfocus();
+      _searchGameList = [];
+      setState(() {});
+    });
+  }
+
+  _searchOnChanged(text) {
+    _searchGameList = [];
+    for (var element in _gameList) {
+      if (element.title!.contains(text)) {
+        _searchGameList.add(element);
+      }
+    }
+    setState(() {});
+  }
+
+  Padding _buildBody(BuildContext context) => Padding(
+        padding: context.paddingLowSymmetric,
+        child: Column(
+          children: [
+            const Divider(),
+            Expanded(
+              child: Padding(
+                padding: context.paddingLowSymmetric,
+                child: _buildListView(),
+              ),
+            ),
+          ],
+        ),
+      );
+
+  ListView _buildListView() => ListView.builder(
+        itemCount:
+            _searchGameList.isEmpty ? _gameList.length : _searchGameList.length,
+        itemBuilder: (BuildContext context, int index) {
+          List<BaseGameModel> list = [];
+          if (_searchGameList.isNotEmpty) {
+            list = _searchGameList;
+          } else {
+            list = _gameList;
+          }
+          String route = '';
+          if (index <= _indoorGameList.length) {
+            route = NavigationConstant.indoorGameDetail;
+          }
+          return _buildCard(list[index], route);
+        },
+      );
+
+  InkWell _buildCard(BaseGameModel model, String route) => InkWell(
+        onTap: () {
+          NavigationManager.instance.navigationToPage(route, args: model);
+        },
+        child: GameCard(
+          context: context,
+          imagePath: model.imagePath.toString(),
+          title: model.title.toString(),
+          description: model.description.toString(),
+          location: model.location.toString(),
+          date: model.date.toString(),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: Column(
-        children: [
-          const Divider(),
-          Expanded(
-            child: Padding(
-              padding: context.paddingLowSymmetric,
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (BuildContext context, int index) {
-                  return Text('test');
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
+      body: _buildBody(context),
     );
   }
 }

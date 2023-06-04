@@ -1,3 +1,5 @@
+import 'package:orienteering/model/game/base_game_model.dart';
+
 import '../../../core/init/firebase/firebase_stroge_manager.dart';
 import '../../../core/init/firebase/firestore_manager.dart';
 import '../../../core/init/navigation/navigation_manager.dart';
@@ -35,7 +37,7 @@ class IndoorGameService {
     return null;
   }
 
-  Future<List<IndoorGameModel>> getAllGames() async {
+  Future<List<BaseGameModel>> getAllGames() async {
     List<IndoorGameModel> games = [];
     try {
       var data = await _indoorGameFirestoreManager.getAll(

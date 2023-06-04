@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orienteering/core/constants/app/app_constant.dart';
 
 import '../../../core/constants/navigation/navigation_constant.dart';
 import '../../../core/extensions/context_extension.dart';
@@ -30,7 +31,8 @@ class _HomeSubpageState extends State<HomeSubpage> {
   Future<void> _init() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _user = await UserService.instance.getUser();
-      _indoorGameList = await IndoorGameService.instance.getAllGames();
+      _indoorGameList = await IndoorGameService.instance.getAllGames()
+          as List<IndoorGameModel>;
       setState(() {});
     });
   }
@@ -45,9 +47,7 @@ class _HomeSubpageState extends State<HomeSubpage> {
           SizedBox(
             height: context.lowHeightValue,
           ),
-          const Placeholder(
-            fallbackHeight: 200,
-          ),
+          _buildOrienteeringContainer(),
           SizedBox(
             height: context.lowHeightValue,
           ),
@@ -134,8 +134,10 @@ class _HomeSubpageState extends State<HomeSubpage> {
             NavigationManager.instance
                 .navigationToPage(NavigationConstant.eventList);
           },
-          rightWidget: const CircleAvatar(
-            backgroundColor: Colors.amber,
+          rightWidget: CircleAvatar(
+            backgroundImage: NetworkImage(
+              _user.imagePath ?? 'https://picsum.photos/200/300',
+            ),
           ),
         ),
       ),
@@ -147,6 +149,46 @@ class _HomeSubpageState extends State<HomeSubpage> {
     return Scaffold(
       appBar: _buildAppBar(),
       body: _buildBody(),
+    );
+  }
+
+  Stack _buildOrienteeringContainer() => Stack(
+        children: [
+          _buildOrienteeringImage(),
+          _buildWhatIsOrienteeringButton(),
+        ],
+      );
+
+  ClipRRect _buildOrienteeringImage() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(32.0),
+      child: Image.asset(
+        AppConstant.orienteeringImage,
+        fit: BoxFit.fill,
+        height: 200,
+        width: double.infinity,
+      ),
+    );
+  }
+
+  Positioned _buildWhatIsOrienteeringButton() {
+    return Positioned.fill(
+      child: Align(
+        alignment: Alignment.bottomRight,
+        child: TextButton(
+          onPressed: () {
+            NavigationManager.instance
+                .navigationToPage(NavigationConstant.orienteeringExplanation);
+          },
+          child: Text(
+            'Oryantiring Nedir?',
+            style: TextStyle(
+              fontSize: 20,
+              color: context.colors.tertiaryContainer,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -31,10 +31,13 @@ class GameContainer extends GestureDetector {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.network(
-                        imagePath,
-                        width: context.customWidthValue(0.64),
-                        height: context.lowHeightValue * 2,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16.0),
+                        child: Image.network(
+                          imagePath,
+                          width: context.customWidthValue(0.64),
+                          height: context.lowHeightValue * 2,
+                        ),
                       ),
                       const SizedBox(height: 20),
                       Text(

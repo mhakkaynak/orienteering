@@ -81,7 +81,7 @@ class _QrCratePageState extends State<QrCratePage> {
             ),
             Text(
               _qrNameTextController.text,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ],
         ),

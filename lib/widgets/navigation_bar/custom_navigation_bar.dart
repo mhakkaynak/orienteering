@@ -14,7 +14,7 @@ class CustomBottomNavigationBar extends Padding {
                 horizontal: context.lowWidthValue / 2,
                 vertical: context.lowHeightValue / 2),
             child: GNav(
-              tabBackgroundColor: context.theme!.colorScheme.surfaceVariant,
+              tabBackgroundColor: context.theme.colorScheme.surfaceVariant,
               padding: context.paddingLowSymmetric,
               onTabChange: onTabChange,
               tabs: const [

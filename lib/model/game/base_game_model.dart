@@ -18,6 +18,7 @@ class BaseGameModel extends BaseModel {
   List<String>? participantsUid;
   String? rules;
   String? title;
+  String? location;
 
   @override
   fromJson(json) {

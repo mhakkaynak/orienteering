@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/pages/game/indoor/game/indoor_game_page.dart';
-import 'package:orienteering/pages/game/organizer_panel_page.dart';
+
 import '../../../pages/auth/auth_page.dart';
+import '../../../pages/auth/login_page.dart';
+import '../../../pages/auth/register_page.dart';
 import '../../../pages/error/error_page.dart';
+import '../../../pages/game/game_statistics_page.dart';
 import '../../../pages/game/indoor/create_game/indoor_create_game_page.dart';
 import '../../../pages/game/indoor/create_game/qr_create_page.dart';
 import '../../../pages/game/indoor/create_game/qr_list_page.dart';
 import '../../../pages/game/indoor/game/indoor_game_detail_page.dart';
+import '../../../pages/game/indoor/game/indoor_game_page.dart';
+import '../../../pages/game/organizer_panel_page.dart';
 import '../../../pages/game/outdoor/out_map_page.dart';
 import '../../../pages/home/home_page.dart';
 import '../../../pages/home/subpages/event_list_subpage.dart';
+import '../../../pages/home/subpages/orienteering_explanation_subpage.dart';
 import '../../../pages/user/user_edit_page.dart';
-
-import '../../../pages/auth/login_page.dart';
-import '../../../pages/auth/register_page.dart';
 import '../../constants/navigation/navigation_constant.dart';
 
 class NavigationRouteManager {
@@ -43,9 +45,9 @@ class NavigationRouteManager {
       case NavigationConstant.eventList:
         return _navigationToDefault(const EventListSubpage(), args);
       case NavigationConstant.indoorCreateGame:
-        return _navigationToDefault(IndoorCraeteGame(), args);
+        return _navigationToDefault(const IndoorCraeteGame(), args);
       case NavigationConstant.outdoorMapPage:
-        return _navigationToDefault(OutMapPage(), args);
+        return _navigationToDefault(const OutMapPage(), args);
       case NavigationConstant.qrList:
         return _navigationToDefault(const QrListPage(), args);
       case NavigationConstant.qrCreate:
@@ -56,6 +58,10 @@ class NavigationRouteManager {
         return _navigationToDefault(const OrganizerPanelPage(), args);
       case NavigationConstant.indoorGame:
         return _navigationToDefault(const IndoorGamePage(), args);
+      case NavigationConstant.orienteeringExplanation:
+        return _navigationToDefault(const OrienteeringExplanationSubPage(), args);
+      case NavigationConstant.gameStatistics:
+        return _navigationToDefault(const GameStatisticsPage(), args);
       default:
         return _navigationToDefault(const ErrorPage(), args);
     }
