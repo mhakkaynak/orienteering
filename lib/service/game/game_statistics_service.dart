@@ -33,13 +33,27 @@ class GameStatisticsService {
   Future<GameStatisticsModel> get() async {
     GameStatisticsModel model = GameStatisticsModel();
     try {
-      model = await _firestoreManager.get(UserService.instance.uid.toString(),
+      // TODO: değiştir.    UserService.instance.uid.toString(),
+      model = await _firestoreManager.get('DJRprZ5bpdfyYZG6XtYxGVolTGy2',
           model: model) as GameStatisticsModel;
+    } catch (e) {
+      NavigationManager.instance
+          .navigationToPageClearWithDelay(NavigationConstant.error); 
+    }
+    return model;
+  }
+
+  Future<List<GameStatisticsModel>> getRank() async {
+    List<GameStatisticsModel> list = [];
+    try {
+      var data = await _firestoreManager.getAll(
+          model: GameStatisticsModel.empty(), order: 'endDate');
+      list = List<GameStatisticsModel>.from(data);
     } catch (e) {
       NavigationManager.instance
           .navigationToPageClearWithDelay(NavigationConstant.error);
     }
-    return model;
+    return list;
   }
 
   Future<void> update(GameStatisticsModel model) async {

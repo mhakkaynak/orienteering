@@ -78,6 +78,7 @@ class _IndoorGamePageState extends State<IndoorGamePage> {
         });
         _gameStatisticsModel.totalMark![title] = DateTime.now().toString();
         if (_flagList.length == _foundFlagList.length) {
+          // Game Over.
           showDialog(
             context: context,
             builder: (_) => _buildAlertDialog('Oyun Bitti!', 'Tebrikler'),
