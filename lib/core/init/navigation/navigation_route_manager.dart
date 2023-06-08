@@ -12,6 +12,8 @@ import '../../../pages/game/indoor/game/indoor_game_detail_page.dart';
 import '../../../pages/game/indoor/game/indoor_game_page.dart';
 import '../../../pages/game/organizer_panel_page.dart';
 import '../../../pages/game/outdoor/out_map_page.dart';
+import '../../../pages/game/outdoor/outdoor_game_detail_page.dart';
+import '../../../pages/game/outdoor/outdoor_play_game_page.dart';
 import '../../../pages/home/home_page.dart';
 import '../../../pages/home/subpages/event_list_subpage.dart';
 import '../../../pages/home/subpages/orienteering_explanation_subpage.dart';
@@ -54,6 +56,10 @@ class NavigationRouteManager {
         return _navigationToDefault(const QrCratePage(), args);
       case NavigationConstant.indoorGameDetail:
         return _navigationToDefault(const IndoorGameDetailPage(), args);
+      case NavigationConstant.outdoorGameDetail:
+        return _navigationToDefault(const OutdoorGameDetailPage(), args);
+      case NavigationConstant.outdoorPlayGame:
+        return _navigationToDefault(const OutdoorPlayGame(), args);
       case NavigationConstant.organizerPanel:
         return _navigationToDefault(const OrganizerPanelPage(), args);
       case NavigationConstant.indoorGame:

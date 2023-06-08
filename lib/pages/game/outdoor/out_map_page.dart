@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -32,6 +33,7 @@ class OutMapPageState extends State<OutMapPage> {
   bool isTimerRunning = false;
   int secondsPassed = 0;
   String id = "";
+  String? currentGameId;
   late Timer _timer;
 
   late OutMapModel outMapModel;
@@ -39,6 +41,7 @@ class OutMapPageState extends State<OutMapPage> {
   @override
   void initState() {
     super.initState();
+    currentGameId = null;
     _getLocation();
     Timer.periodic(const Duration(seconds: 5), (Timer t) => _getLocation());
     _outMapModelService = OutMapModelService();
@@ -47,8 +50,34 @@ class OutMapPageState extends State<OutMapPage> {
       markerAdet: markerAdet,
       score: score,
       secondsPassed: secondsPassed,
-      id: id,
+      id: id, 
+      markers: [], joinedPlayers: [],
     );
+  }
+
+  void setCurrentGameId(String gameId) {
+    setState(() {
+      currentGameId = gameId;
+      outMapModel = OutMapModel(
+        markerAdet: markerAdet,
+        score: score,
+        secondsPassed: secondsPassed,
+        id: currentGameId!, 
+        markers: [], joinedPlayers: [],
+      );
+    });
+  }
+
+  void updateOutMapModel() {
+    setState(() {
+      outMapModel = OutMapModel(
+        markerAdet: markerAdet,
+        score: score,
+        secondsPassed: secondsPassed,
+        id: currentGameId!, 
+        markers: outMapModel.markers, joinedPlayers: [],  // existing markers
+      );
+    });
   }
 
   Future<void> _getLocation() async {
@@ -120,11 +149,19 @@ class OutMapPageState extends State<OutMapPage> {
     );
   }
 
-  void _increaseScore() {
-    setState(() {
-      outMapModel.score += 50;
-    });
+  void _increaseScore() async {
+  setState(() {
+    outMapModel.score += 50;
+  });
+  updateOutMapModel(); // Burada çağırıyoruz
+  try {
+    await _outMapModelService.update(outMapModel, currentGameId!); // veri tabanında güncelleme yap
+    print('Veri güncellendi: ${outMapModel.toJson()}');
+  } catch (e) {
+    print('Veri güncellenirken hata oluştu: $e');
   }
+}
+
 
   void _startTimer() {
     if (!isTimerRunning) {
@@ -160,28 +197,44 @@ class OutMapPageState extends State<OutMapPage> {
       isTimerRunning = true;
       outMapModel.secondsPassed = 0;
       outMapModel.score = 0;
+      markerAdet = outMapModel.markerAdet; // markerAdet değerini set ettik
     });
     _startTimer();
     try {
-      await _outMapModelService.create(outMapModel);
+      outMapModel = OutMapModel( // outMapModel nesnesini güncelliyoruz
+        markerAdet: markerAdet,
+        score: score,
+        secondsPassed: secondsPassed,
+        id: id, 
+        markers: [], joinedPlayers: [],
+      );
+      currentGameId = await _outMapModelService.create(outMapModel); // oyun oluşturuldu ve id'si kaydedildi
       print('Veri oluşturuldu: ${outMapModel.toJson()}');
     } catch (e) {
       print('Veri oluşturulurken hata oluştu: $e');
     }
   }
 
-  void _stopGame() async {
-    setState(() {
-      isTimerRunning = false;
-    });
-    _stopTimer();
-    try {
-      await _outMapModelService.update(outMapModel, "x6jjBYaGKvBFMAkT0eVq");
-      print('Veri güncellendi: ${outMapModel.toJson()}');
-    } catch (e) {
-      print('Veri güncellenirken hata oluştu: $e');
-    }
+
+   void _stopGame() async {
+  if (currentGameId == null) { // oyun id'si olmadan durdurma işlemi yapılmamalı
+    print('Oyun henüz başlamadı, bu yüzden durdurulamaz.');
+    return;
   }
+  setState(() {
+    isTimerRunning = false;
+  });
+  _stopTimer();
+  updateOutMapModel(); // Burada çağırıyoruz
+  try {
+    await _outMapModelService.update(outMapModel, currentGameId!); // veri tabanında güncelleme yap
+    print('Veri güncellendi: ${outMapModel.toJson()}');
+  } catch (e) {
+    print('Veri güncellenirken hata oluştu: $e');
+  }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -198,6 +251,7 @@ class OutMapPageState extends State<OutMapPage> {
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
                       outMapModel.markerAdet = int.parse(value);
+                      
                     },
                   ),
                   actions: [
@@ -334,19 +388,21 @@ class OutMapPageState extends State<OutMapPage> {
   }
 
   void _addMarkers(LatLng latLng, int markersToAdd, int markerCount) {
-    Set<Marker> newMarkers = {};
-    for (int i = 0; i < markersToAdd; i++) {
-      Marker marker = Marker(
-        markerId: MarkerId('marker_${_markers.length + 1}'),
-        position: latLng,
-        infoWindow: InfoWindow(
-          title: 'Marker ${_markers.length + 1}',
-        ),
-      );
-      newMarkers.add(marker);
-    }
-    setState(() {
-      _markers.addAll(newMarkers);
-    });
+  Set<Marker> newMarkers = {};
+  for (int i = 0; i < markersToAdd; i++) {
+    Marker marker = Marker(
+      markerId: MarkerId('marker_${_markers.length + 1}'),
+      position: latLng,
+      infoWindow: InfoWindow(
+        title: 'Marker ${_markers.length + 1}',
+      ),
+    );
+    newMarkers.add(marker);
   }
+  setState(() {
+    _markers.addAll(newMarkers);
+    outMapModel.markers.add(GeoPoint(latLng.latitude, latLng.longitude));
+  });
+}
+
 }

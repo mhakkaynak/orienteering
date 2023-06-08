@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: context.theme,
+      debugShowCheckedModeBanner: false,     
       navigatorKey: NavigationManager.instance.navigationKey,
       onGenerateRoute: (args) =>
           NavigationRouteManager.instance?.generateRoute(args),

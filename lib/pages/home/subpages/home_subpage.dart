@@ -4,9 +4,12 @@ import 'package:orienteering/core/constants/app/app_constant.dart';
 import '../../../core/constants/navigation/navigation_constant.dart';
 import '../../../core/extensions/context_extension.dart';
 import '../../../core/init/navigation/navigation_manager.dart';
+import '../../../model/game/base_game_model.dart';
 import '../../../model/game/indoor_game_model.dart';
+import '../../../model/game/outdoor_game_model.dart';
 import '../../../model/user/user_model.dart';
 import '../../../service/game/indoor/indoor_game_service.dart';
+import '../../../service/game/outdoor/outdoor_game_service.dart';
 import '../../../service/user/user_service.dart';
 import '../../../widgets/app_bars/custom_search_bar.dart';
 import '../../../widgets/containers/game_container.dart';
@@ -20,6 +23,7 @@ class HomeSubpage extends StatefulWidget {
 
 class _HomeSubpageState extends State<HomeSubpage> {
   List<IndoorGameModel> _indoorGameList = [];
+  List<OutMapModel> _outdoorGameList = [];
   UserModel _user = UserModel.empty();
 
   @override
@@ -33,6 +37,7 @@ class _HomeSubpageState extends State<HomeSubpage> {
       _user = await UserService.instance.getUser();
       _indoorGameList = await IndoorGameService.instance.getAllGames()
           as List<IndoorGameModel>;
+      _outdoorGameList = await OutMapModelService.getAll();
       setState(() {});
     });
   }
@@ -58,29 +63,68 @@ class _HomeSubpageState extends State<HomeSubpage> {
           SizedBox(
             height: context.lowHeightValue * 0.4,
           ),
-          _buildListView()
+          _buildListView(_indoorGameList, NavigationConstant.indoorGameDetail),
+          SizedBox(
+            height: context.lowHeightValue,
+          ),
+          Text(
+            'Outdoor Oyunlar',
+            style: context.textTheme.titleSmall,
+          ),
+          SizedBox(
+            height: context.lowHeightValue * 0.4,
+          ),
+          _buildListView2(_outdoorGameList, NavigationConstant.outdoorGameDetail), // Outdoor oyunlarının listelenmesi eklendi.
         ],
       ),
     );
   }
 
-  SizedBox _buildListView() {
+  SizedBox _buildListView(List<BaseGameModel> gameList, String route) {
     return SizedBox(
       height: context.customHeightValue(0.3),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: _indoorGameList.length,
+        itemCount: gameList.length,
         itemBuilder: (BuildContext context, int index) {
-          var indoorGame = _indoorGameList[index];
+          var game = gameList[index];
           return _buildGameContainer(
-              context, indoorGame, NavigationConstant.indoorGameDetail);
+              context, game, route);
+        },
+      ),
+    );
+  }
+  SizedBox _buildListView2(List<OutMapModel> gameList, String route) {
+    return SizedBox(
+      height: context.customHeightValue(0.3),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: gameList.length,
+        itemBuilder: (BuildContext context, int index) {
+          var game = gameList[index];
+          return _buildGameContainer2(
+              context, game, route);
         },
       ),
     );
   }
 
+  GestureDetector _buildGameContainer2(
+      BuildContext context, OutMapModel game, String route) {
+    return GameContainer(
+      context: context,
+      dateText: game.date.toString(),
+      imagePath: game.imagePath ?? 'https://picsum.photos/200/300',
+      titleText: game.id.toString(),
+      locationText: game.location.toString(),
+      onTap: () {
+        NavigationManager.instance.navigationToPage(route, args: game);
+      },
+    );
+  }
+
   GestureDetector _buildGameContainer(
-      BuildContext context, IndoorGameModel game, String route) {
+      BuildContext context, BaseGameModel game, String route) {
     return GameContainer(
       context: context,
       dateText: game.date.toString(),
