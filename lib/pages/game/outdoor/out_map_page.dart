@@ -1,9 +1,10 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'dart:math' as math;
-
+import '../../../core/constants/navigation/navigation_constant.dart';
+import '../../../core/init/navigation/navigation_manager.dart';
 import '../../../model/game/outdoor_game_model.dart';
 import '../../../service/game/outdoor/outdoor_game_service.dart';
 
@@ -32,23 +33,56 @@ class OutMapPageState extends State<OutMapPage> {
   bool isTimerRunning = false;
   int secondsPassed = 0;
   String id = "";
-  late Timer _timer;
+  String gameTitle = '';
+  String? currentGameId;
+  late DateTime selectedDateTime;
 
   late OutMapModel outMapModel;
 
   @override
   void initState() {
     super.initState();
+    currentGameId = null;
     _getLocation();
     Timer.periodic(const Duration(seconds: 5), (Timer t) => _getLocation());
     _outMapModelService = OutMapModelService();
+    selectedDateTime = DateTime.now();
 
     outMapModel = OutMapModel(
       markerAdet: markerAdet,
-      score: score,
-      secondsPassed: secondsPassed,
       id: id,
+      gametitle: id, 
+      selectedDateTime: selectedDateTime,
+      markers: [], 
+      joinedPlayers: [],
     );
+  }
+
+  void setCurrentGameId(String gameId) {
+    setState(() {
+      currentGameId = gameId;
+      outMapModel = OutMapModel(
+        markerAdet: markerAdet,
+        id: currentGameId!, 
+        selectedDateTime: selectedDateTime,
+        markers: [], 
+        joinedPlayers: [], 
+        gametitle: gameTitle,
+      );
+    });
+  }
+
+  void updateOutMapModel() {
+    setState(() {
+      outMapModel = OutMapModel(
+        markerAdet: markerAdet,
+        id: currentGameId!, 
+        selectedDateTime: selectedDateTime,
+        markers: outMapModel.markers, 
+        joinedPlayers: [], 
+        gametitle: gameTitle,
+      );
+    });
   }
 
   Future<void> _getLocation() async {
@@ -56,16 +90,7 @@ class OutMapPageState extends State<OutMapPage> {
       final LocationData locationData = await _location.getLocation();
       setState(() {
         _currentLocation = locationData;
-        _checkIfReachedMarker();
       });
-
-      if (!isTimerRunning && _markers.length == outMapModel.markerAdet) {
-        _startTimer();
-      }
-
-      if (_markers.length == 0) {
-        _stopTimer();
-      }
     } catch (e) {
       print('Could not get location: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -77,111 +102,46 @@ class OutMapPageState extends State<OutMapPage> {
     }
   }
 
-  void _checkIfReachedMarker() {
-    if (_currentLocation != null) {
-      double userLat = _currentLocation!.latitude!;
-      double userLng = _currentLocation!.longitude!;
-      Set<Marker> reachedMarkers = {};
-      for (Marker marker in _markers) {
-        double markerLat = marker.position.latitude;
-        double markerLng = marker.position.longitude;
-        double distance = _calculateDistance(userLat, userLng, markerLat, markerLng);
-        if (distance <= 50) {
-          reachedMarkers.add(marker);
-          _showReachedMarkerSnackbar();
-          _increaseScore();
-        }
-      }
-      setState(() {
-        _markers.removeAll(reachedMarkers);
-      });
-    }
-  }
 
-  double _calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-    const int earthRadius = 6371000; // in meters
-    double dLat = _toRadians(lat2 - lat1);
-    double dLon = _toRadians(lon2 - lon1);
-    double a = math.sin(dLat / 2) * math.sin(dLat / 2) + math.cos(_toRadians(lat1)) * math.cos(_toRadians(lat2)) * math.sin(dLon / 2) * math.sin(dLon / 2);
-    double c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
-    double distance = earthRadius * c;
-    return distance;
-  }
-
-  double _toRadians(double degree) {
-    return degree * (math.pi / 180);
-  }
-
-  void _showReachedMarkerSnackbar() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Tebrikler, seçtiğiniz markera ulaştınız!'),
-      ),
-    );
-  }
-
-  void _increaseScore() {
-    setState(() {
-      outMapModel.score += 50;
-    });
-  }
-
-  void _startTimer() {
-    if (!isTimerRunning) {
-      _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-        setState(() {
-          outMapModel.secondsPassed++;
-        });
-      });
-      isTimerRunning = true;
-    }
-  }
-
-  void _stopTimer() {
-    _timer.cancel();
-    isTimerRunning = false;
-  }
-
-  String _formatDuration(int seconds) {
-    Duration duration = Duration(seconds: seconds);
-    String formattedDuration = '${duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:'
-        '${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}';
-    return formattedDuration;
-  }
 
   @override
   void dispose() {
-    _timer.cancel();
     super.dispose();
   }
 
   void _startGame() async {
     setState(() {
-      isTimerRunning = true;
-      outMapModel.secondsPassed = 0;
-      outMapModel.score = 0;
+      markerAdet = outMapModel.markerAdet; // markerAdet değerini set ettik
     });
-    _startTimer();
+    
     try {
-      await _outMapModelService.create(outMapModel);
+      outMapModel = OutMapModel( // outMapModel nesnesini güncelliyoruz
+        markerAdet: markerAdet,
+       selectedDateTime: selectedDateTime,
+        id: id, 
+        markers: [], 
+        joinedPlayers: [], gametitle: gameTitle,
+      );
+      currentGameId = await _outMapModelService.create(outMapModel); 
       print('Veri oluşturuldu: ${outMapModel.toJson()}');
     } catch (e) {
       print('Veri oluşturulurken hata oluştu: $e');
     }
   }
 
-  void _stopGame() async {
-    setState(() {
-      isTimerRunning = false;
-    });
-    _stopTimer();
-    try {
-      await _outMapModelService.update(outMapModel, "x6jjBYaGKvBFMAkT0eVq");
-      print('Veri güncellendi: ${outMapModel.toJson()}');
-    } catch (e) {
-      print('Veri güncellenirken hata oluştu: $e');
-    }
+
+   void _stopGame() async {
+ 
+  updateOutMapModel(); // Burada çağırıyoruz
+  try {
+    await _outMapModelService.update(outMapModel, currentGameId!); // veri tabanında güncelleme yap
+    print('Veri güncellendi: ${outMapModel.toJson()}');
+  } catch (e) {
+    print('Veri güncellenirken hata oluştu: $e');
   }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -198,6 +158,7 @@ class OutMapPageState extends State<OutMapPage> {
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
                       outMapModel.markerAdet = int.parse(value);
+                      
                     },
                   ),
                   actions: [
@@ -223,11 +184,73 @@ class OutMapPageState extends State<OutMapPage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              _stopGame();
-            },
-            icon: Icon(Icons.stop),
-          ),
+  onPressed: () async {
+    DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+    );
+
+    if (selectedDate != null) {
+      // ignore: use_build_context_synchronously
+      TimeOfDay? selectedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+
+      if (selectedTime != null) {
+        DateTime selectedDateTime2 = DateTime(
+          selectedDate.year,
+          selectedDate.month,
+          selectedDate.day,
+          selectedTime.hour,
+          selectedTime.minute,
+        );
+
+        // Save selectedDateTime to outMapModel
+        selectedDateTime = selectedDateTime2;
+
+        _stopGame();
+
+        // ignore: use_build_context_synchronously
+        showDialog(
+          context: context, 
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Oyun ismi girin'),
+              content: TextField(
+                keyboardType: TextInputType.name,
+                onChanged: (value) async {
+                  gameTitle = value;
+                  updateOutMapModel();
+                  try {
+                    await _outMapModelService.update(outMapModel, currentGameId!);
+                    print('Veri güncellendi: ${outMapModel.toJson()}');
+                  } catch (e) {
+                    print('Veri güncellenirken hata oluştu: $e');
+                  }
+                },
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    NavigationManager.instance.navigationToPage(
+                      NavigationConstant.home
+                    );
+                  },
+                  child: const Text('Tamam'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+  },
+  icon: const Icon(Icons.save),
+),
+
         ],
       ),
       body: Column(
@@ -250,23 +273,6 @@ class OutMapPageState extends State<OutMapPage> {
               },
             ),
           ),
-          Visibility(
-            visible: isTimerRunning,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Süre: ${_formatDuration(outMapModel.secondsPassed)}',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Puan: ${outMapModel.score}',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
         ],
       ),
     );
@@ -284,14 +290,9 @@ class OutMapPageState extends State<OutMapPage> {
       print('Current location: ${currentLocation.latitude}, ${currentLocation.longitude}');
       setState(() {
         _currentLocation = currentLocation;
-        _checkIfReachedMarker();
+        
       });
 
-      CameraPosition newPosition = CameraPosition(
-        target: LatLng(currentLocation.latitude ?? 0, currentLocation.longitude ?? 0),
-        zoom: 17.0,
-      );
-      controller.animateCamera(CameraUpdate.newCameraPosition(newPosition));
     });
   }
 
@@ -334,19 +335,21 @@ class OutMapPageState extends State<OutMapPage> {
   }
 
   void _addMarkers(LatLng latLng, int markersToAdd, int markerCount) {
-    Set<Marker> newMarkers = {};
-    for (int i = 0; i < markersToAdd; i++) {
-      Marker marker = Marker(
-        markerId: MarkerId('marker_${_markers.length + 1}'),
-        position: latLng,
-        infoWindow: InfoWindow(
-          title: 'Marker ${_markers.length + 1}',
-        ),
-      );
-      newMarkers.add(marker);
-    }
-    setState(() {
-      _markers.addAll(newMarkers);
-    });
+  Set<Marker> newMarkers = {};
+  for (int i = 0; i < markersToAdd; i++) {
+    Marker marker = Marker(
+      markerId: MarkerId('marker_${_markers.length + 1}'),
+      position: latLng,
+      infoWindow: InfoWindow(
+        title: 'Marker ${_markers.length + 1}',
+      ),
+    );
+    newMarkers.add(marker);
   }
+  setState(() {
+    _markers.addAll(newMarkers);
+    outMapModel.markers.add(GeoPoint(latLng.latitude, latLng.longitude));
+  });
+}
+
 }

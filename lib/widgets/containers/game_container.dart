@@ -48,11 +48,11 @@ class GameContainer extends GestureDetector {
                       ),
                       Text(
                         titleText,
-                        style: context.textTheme.titleSmall,
+                        style: context.textTheme.titleSmall?.copyWith(fontSize: context.customWidthValue(0.04)),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                       ),
-                      const Spacer(),
+                      const SizedBox(height: 10),
                       RichText(
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,

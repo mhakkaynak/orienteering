@@ -8,6 +8,9 @@ mixin NavigationConstant {
   static const indoorCreateGame = '/indoorCreateGame';
   static const indoorGame = '/indoorGame';
   static const indoorGameDetail = '/indoorGameDetail';
+  static const outdoorGameDetail = '/outdoorGameDetail';
+  static const outdoorPlayGame = '/outdoorPlayGame';
+  static const playerStatsPage = '/playerStatsPage';
   static const login = '/login';
   static const organizerPanel = '/organizerPanel';
   static const orienteeringExplanation = '/orienteeringExplantion';

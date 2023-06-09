@@ -1,47 +1,45 @@
-import 'base_game_model.dart';
+  import 'package:cloud_firestore/cloud_firestore.dart';
 
-class OutMapModel extends BaseGameModel {
-  int markerAdet;
-  int score;
-  int secondsPassed;
-  String id;
+  import 'base_game_model.dart';
 
-  OutMapModel({
-    required this.markerAdet,
-    required this.score,
-    required this.secondsPassed,
-    required this.id,
-    String? date,
-    String? description,
-    String? organizerUid,
-    List<String>? participantsUid,
-    String? rules,
-    String? title,
-  }) : super(
-          date: date,
-          description: description,
-          organizerUid: organizerUid,
-          participantsUid: participantsUid,
-          rules: rules,
-          title: title,
-        );
+  class OutMapModel extends BaseGameModel{
+    OutMapModel({
+      required this.markerAdet,
+      required this.id,
+      required this.selectedDateTime,
+      required this.gametitle,
+      required this.markers,
+      required this.joinedPlayers, // Add this line
+    });
 
-  @override
-  void fromJson(json) {
-    super.fromJson(json);
-    markerAdet = json['markerAdet'] ?? 0;
-    score = json['score'] ?? 0;
-    secondsPassed = json['secondsPassed'] ?? 0;
+    int markerAdet;
+    String id;
+    DateTime? selectedDateTime;
+    String gametitle;
+    List<GeoPoint> markers;
+    List<String> joinedPlayers; // And this line
+
+    
+
+    Map<String, dynamic> toJson() {
+      return {
+        'markerAdet': markerAdet,
+        'id': id,
+        'date': selectedDateTime?.toIso8601String(),
+        'gametitle': gametitle,
+        'markers': markers.map((point) => {'lat': point.latitude, 'lng': point.longitude}).toList(),
+        'joinedPlayers': joinedPlayers, // And this line
+      };
+    }
+
+    factory OutMapModel.fromJson(Map<String, dynamic> json) {
+      return OutMapModel(
+        markerAdet: json['markerAdet'],
+        id: json['id'],
+        selectedDateTime: DateTime.parse(json['date']),
+        gametitle: json['gametitle'],
+        markers: (json['markers'] as List).map((point) => GeoPoint(point['lat'], point['lng'])).toList(),
+        joinedPlayers: List<String>.from(json['joinedPlayers']), // And this line
+      );
+    }
   }
-
- 
-
-  @override
-  Map<String, dynamic> toJson() {
-    var map = super.toJson();
-    map['markerAdet'] = markerAdet;
-    map['score'] = score;
-    map['secondsPassed'] = secondsPassed;
-    return map;
-  }
-}
