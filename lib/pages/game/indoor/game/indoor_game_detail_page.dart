@@ -76,8 +76,7 @@ class _IndoorGameDetailPageState extends State<IndoorGameDetailPage> {
           ),
           ElevatedButton(
               onPressed: () async {
-                IndoorGameService.instance.joinGame(_game);
-                setState(() {});
+                await IndoorGameService.instance.joinGame(_game);
                 NavigationManager.instance.navigationToPage(
                     NavigationConstant.indoorGame,
                     args: 'indoor-${_game.title}');

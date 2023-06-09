@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:orienteering/core/constants/navigation/navigation_constant.dart';
 import 'package:orienteering/core/extensions/context_extension.dart';
 import 'package:orienteering/model/game/game_statistics_model.dart';
 
+import '../../core/init/navigation/navigation_manager.dart';
 import '../../service/game/game_statistics_service.dart';
 
 class GameStatisticsPage extends StatefulWidget {
@@ -20,10 +22,12 @@ class _GameStatisticsPageState extends State<GameStatisticsPage> {
   late final GameStatisticsService _gameStatisticsService;
   @override
   void initState() {
-    var data = ModalRoute.of(context)?.settings.arguments;
+    Future.delayed(Duration.zero, () {
+      var data = ModalRoute.of(context)?.settings.arguments;
       _gameTitle = data.toString();
-    _gameStatisticsService = GameStatisticsService(_gameTitle);
-    _init();
+      _gameStatisticsService = GameStatisticsService(_gameTitle);
+      _init();
+    });
     super.initState();
   }
 
@@ -72,6 +76,13 @@ class _GameStatisticsPageState extends State<GameStatisticsPage> {
                   },
                 ),
               ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                  onPressed: () {
+                    NavigationManager.instance
+                        .navigationToPageClear(NavigationConstant.home);
+                  },
+                  child: const Text('Ana Sayfaya Dön'))
             ],
           ),
         ),

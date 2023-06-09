@@ -29,12 +29,8 @@ class AuthPage extends StatelessWidget {
           child: Padding(
             padding: context.paddingLowSymmetric,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: context.normalHeightValue),
-                const Placeholder(fallbackHeight: 200),
-                SizedBox(
-                  height: context.normalHeightValue,
-                ),
                 _buildfilledButton(
                     context, 'Kayıt Ol', NavigationConstant.register),
                 SizedBox(height: context.lowHeightValue),

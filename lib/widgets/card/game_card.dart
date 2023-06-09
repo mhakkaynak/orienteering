@@ -34,6 +34,7 @@ class GameCard extends Padding {
                         child: Image.network(
                           imagePath,
                           height: 110.0,
+                          width: 100,
                         ),
                       ),
                       const SizedBox(width: 16),

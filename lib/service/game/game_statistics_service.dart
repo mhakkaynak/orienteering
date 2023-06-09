@@ -33,8 +33,7 @@ class GameStatisticsService {
   Future<GameStatisticsModel> get() async {
     GameStatisticsModel model = GameStatisticsModel();
     try {
-      // TODO: değiştir.    UserService.instance.uid.toString(),
-      model = await _firestoreManager.get('DJRprZ5bpdfyYZG6XtYxGVolTGy2',
+      model = await _firestoreManager.get(UserService.instance.uid.toString(),
           model: model) as GameStatisticsModel;
     } catch (e) {
       NavigationManager.instance

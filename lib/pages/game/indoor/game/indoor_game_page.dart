@@ -39,8 +39,8 @@ class _IndoorGamePageState extends State<IndoorGamePage> {
       setState(() {
         _gameTitle = data.toString();
       });
+      _init();
     });
-    _init();
     super.initState();
   }
 
@@ -67,7 +67,7 @@ class _IndoorGamePageState extends State<IndoorGamePage> {
 
   void _onQRViewCreated(QRViewController controller) {
     _controller = controller;
-    controller.scannedDataStream.listen((scanData) {
+    controller.scannedDataStream.listen((scanData) async {
       _result = scanData;
       List<String> code = _result!.code.toString().split('|');
       String title = code[0];
@@ -84,7 +84,7 @@ class _IndoorGamePageState extends State<IndoorGamePage> {
             builder: (_) => _buildAlertDialog('Oyun Bitti!', 'Tebrikler'),
           );
           _gameStatisticsModel.endDate = DateTime.now().toString();
-          _gameStatisticService.update(_gameStatisticsModel);
+          await _gameStatisticService.update(_gameStatisticsModel);
           NavigationManager.instance.navigationToPageClear(
               NavigationConstant.gameStatistics,
               args: _gameTitle);

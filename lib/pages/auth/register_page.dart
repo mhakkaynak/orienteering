@@ -85,6 +85,7 @@ class RegisterPage extends StatelessWidget {
         context: context,
       ),
       body: Stack(
+        alignment: Alignment.center,
         children: [
           AuthBackgroundContainer(),
           SingleChildScrollView(
@@ -95,10 +96,6 @@ class RegisterPage extends StatelessWidget {
                   children: [
                     SizedBox(
                       height: context.normalHeightValue,
-                    ),
-                    const Placeholder(
-                      fallbackHeight: 200,
-                      fallbackWidth: 150,
                     ),
                     SizedBox(
                       height: context.normalHeightValue * 0.6,

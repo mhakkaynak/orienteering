@@ -83,28 +83,20 @@ class LoginPage extends StatelessWidget {
     }
   }
 
-  SingleChildScrollView _buildBody(BuildContext context) =>
-      SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
-        child: Padding(
-          padding: context.paddingLowSymmetric,
-          child: Column(
-            children: [
-              SizedBox(
-                height: context.normalHeightValue,
-              ),
-              const Placeholder(
-                fallbackHeight: 200,
-              ),
-              SizedBox(
-                height: context.normalHeightValue * 0.6,
-              ),
-              _buildForm(context),
-              const SizedBox(height: 16),
-              _buildForgotPasswordButton(context),
-              SizedBox(height: context.normalHeightValue * 0.5),
-              _buildLoginButton(context),
-            ],
+  Center _buildBody(BuildContext context) => Center(
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Padding(
+            padding: context.paddingLowSymmetric,
+            child: Column(
+              children: [
+                _buildForm(context),
+                const SizedBox(height: 16),
+                _buildForgotPasswordButton(context),
+                SizedBox(height: context.normalHeightValue * 0.5),
+                _buildLoginButton(context),
+              ],
+            ),
           ),
         ),
       );
