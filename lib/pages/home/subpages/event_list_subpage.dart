@@ -21,6 +21,7 @@ class _EventListSubpageState extends State<EventListSubpage> {
   List<IndoorGameModel> _indoorGameList = [];
   List<BaseGameModel> _searchGameList = [];
   final TextEditingController _searchTextController = TextEditingController();
+  bool _isSearch = false;
 
   @override
   void initState() {
@@ -53,6 +54,7 @@ class _EventListSubpageState extends State<EventListSubpage> {
       _searchTextController.text = '';
       FocusManager.instance.primaryFocus?.unfocus();
       _searchGameList = [];
+      _isSearch = false;
       setState(() {});
     });
   }
@@ -64,6 +66,7 @@ class _EventListSubpageState extends State<EventListSubpage> {
         _searchGameList.add(element);
       }
     }
+    _isSearch = true;
     setState(() {});
   }
 
@@ -83,20 +86,24 @@ class _EventListSubpageState extends State<EventListSubpage> {
       );
 
   ListView _buildListView() => ListView.builder(
-        itemCount:
-            _searchGameList.isEmpty ? _gameList.length : _searchGameList.length,
+        itemCount: _isSearch ? _searchGameList.length : _gameList.length,
         itemBuilder: (BuildContext context, int index) {
           List<BaseGameModel> list = [];
-          if (_searchGameList.isNotEmpty) {
+          if (_isSearch) {
             list = _searchGameList;
           } else {
             list = _gameList;
           }
+
           String route = '';
           if (index <= _indoorGameList.length) {
             route = NavigationConstant.indoorGameDetail;
           }
-          return _buildCard(list[index], route);
+          return _isSearch && list == []
+              ? const Center(
+                  child: Text('Sonuç Yok'),
+                )
+              : _buildCard(list[index], route);
         },
       );
 

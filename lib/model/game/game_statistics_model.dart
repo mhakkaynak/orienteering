@@ -2,7 +2,11 @@ import '../../core/base/base_model.dart';
 
 class GameStatisticsModel extends BaseModel {
   GameStatisticsModel(
-      {this.endDate, this.registrationDate, this.startDate, this.totalMark, this.userName});
+      {this.endDate,
+      this.registrationDate,
+      this.startDate,
+      this.totalMark,
+      this.userName});
 
   GameStatisticsModel._fromJson(o) {
     endDate = o['endDate'];
