@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:math' as math;
 import '../../../model/game/outdoor_game_model.dart';
+import '../../../model/game/outdoor_statistics_model.dart';
 import '../../../service/game/outdoor/outdoor_game_service.dart';
+import '../../../service/game/outdoor/outdoor_statistics_service.dart';
+import '../../home/subpages/home_subpage.dart';
 
 class OutdoorPlayGame extends StatefulWidget {
   const OutdoorPlayGame({Key? key}) : super(key: key);
@@ -30,9 +34,10 @@ class OutdoorPlayGameState extends State<OutdoorPlayGame> {
   int score = 0;
   bool isTimerRunning = false;
   int secondsPassed = 0;
+  String gameTitle = '';
   String? currentGameId;
-  
   late Timer _timer;
+
   
 
   @override
@@ -43,10 +48,12 @@ class OutdoorPlayGameState extends State<OutdoorPlayGame> {
     Timer.periodic(const Duration(seconds: 5), (Timer t) => _getLocation());
     _getMarkersFromFirebase();
     _startTimer();
+    checkUserPerformance();
   }
+  
 Future<void> _getMarkersFromFirebase() async {
     try {
-      OutMapModel outMapModel = await OutMapModelService.get("fRtR5gGJvcvWO4prKyhc");
+      OutMapModel outMapModel = await OutMapModelService.get(HomeSubpage.gameId.toString());
       List<Marker> markers = [];
       
       for (var marker in outMapModel.markers) {
@@ -61,7 +68,8 @@ Future<void> _getMarkersFromFirebase() async {
         _markers.addAll(markers);
         markerAdet = outMapModel.markerAdet;
         playerCount = outMapModel.joinedPlayers.length;
-        print("marker: $markerAdet and oyuncu sayısı: $playerCount ve $markers");
+        gameTitle = outMapModel.gametitle;
+        
       });
     } catch (e) {
       print('Veriler çekilirken hata oluştu: $e');
@@ -152,9 +160,25 @@ Future<void> _getMarkersFromFirebase() async {
   });
 }
 
-void _stopTimer() {
+void checkUserPerformance() async {
+  String userId = "user123";
+  String gameId = "game123";
+  
+  List<PlayerStats>? stats = await PlayerStatsService().getPlayerStats(userId, gameId);
+  
+  if (stats.isNotEmpty) {
+    print("Score in the last game: ${stats.last.score}");
+  }
+}
+
+void _stopTimer() async {
     _timer.cancel();
     isTimerRunning = false;
+ String? currentUserId = FirebaseAuth.instance.currentUser?.uid;
+  if (currentUserId != null) {
+    PlayerStats stats = PlayerStats(userId: currentUserId, score: score, secondsPassed: secondsPassed);
+    PlayerStatsService().updatePlayerStats(gameTitle, stats);
+  }
   }
 
   void _startTimer() {
@@ -183,7 +207,7 @@ void _stopTimer() {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("Kayıtlı Oyuncu: $playerCount", style: const TextStyle(fontSize: 24),),),
+    return Scaffold(appBar: AppBar(title: Text("Kayıtlı Oyuncu Sayısı: $playerCount", style: const TextStyle(fontSize: 24,),),),
       body: Column(
         children: [
           Expanded(

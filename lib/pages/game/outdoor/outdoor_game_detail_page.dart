@@ -36,14 +36,14 @@ class _OutdoorGameDetailPageState extends State<OutdoorGameDetailPage> {
         children: [
           SizedBox(height: context.lowWidthValue * 1.5),
           Text(
-            _game!.id.toString(),
+            _game!.gametitle.toString(),
             style: context.textTheme.titleLarge,
           ),
           const Divider(),
           SizedBox(height: context.lowWidthValue),
-          _buildRichText(context, Icons.calendar_month_outlined, ' ${_game?.secondsPassed}'),
+          _buildRichText(context, Icons.calendar_month_outlined, ' ${_game?.selectedDateTime.toString().substring(0, _game!.selectedDateTime.toString().length - 7)}'),
           SizedBox(height: context.lowWidthValue),
-          _buildRichText(context, Icons.location_on_outlined, ' ${_game?.markerAdet}'),
+          _buildRichText(context, Icons.location_on_outlined, 'Kocaeli'),
           SizedBox(height: context.lowWidthValue),
           const Divider(),
           const Spacer(),

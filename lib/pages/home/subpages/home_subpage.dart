@@ -16,7 +16,7 @@ import '../../../widgets/containers/game_container.dart';
 
 class HomeSubpage extends StatefulWidget {
   const HomeSubpage({super.key});
-
+   static String? gameId;
   @override
   State<HomeSubpage> createState() => _HomeSubpageState();
 }
@@ -49,6 +49,7 @@ class _HomeSubpageState extends State<HomeSubpage> {
         shrinkWrap: true,
         children: [
           _buildCityRow(context),
+          _buildStatsRow(context),
           SizedBox(
             height: context.lowHeightValue,
           ),
@@ -113,11 +114,12 @@ class _HomeSubpageState extends State<HomeSubpage> {
       BuildContext context, OutMapModel game, String route) {
     return GameContainer(
       context: context,
-      dateText: game.date.toString(),
+      dateText: game.selectedDateTime.toString().substring(0, game.selectedDateTime.toString().length - 7),
       imagePath: game.imagePath ?? 'https://picsum.photos/200/300',
-      titleText: game.id.toString(),
-      locationText: game.location.toString(),
+      titleText: game.gametitle.toString(),
+      locationText: "Kocaeli",
       onTap: () {
+        HomeSubpage.gameId = game.id;
         NavigationManager.instance.navigationToPage(route, args: game);
       },
     );
@@ -166,6 +168,32 @@ class _HomeSubpageState extends State<HomeSubpage> {
       ],
     );
   }
+  Row _buildStatsRow(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        GestureDetector(
+          onTap: () {
+            NavigationManager.instance
+                .navigationToPage(NavigationConstant.playerStatsPage);
+          },
+          child: Row(
+            children: [
+              Text(
+                'İstatiskler',
+                style: context.textTheme.labelSmall,
+              ),
+              Icon(
+                Icons.arrow_forward_outlined,
+                color: context.theme.primaryColor,
+              )
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
 
   PreferredSize _buildAppBar() {
     return PreferredSize(
