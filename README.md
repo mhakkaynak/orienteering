@@ -11,13 +11,12 @@
 ### Screenshots
 
 <p style="display: flex; flex-direction:;">
-<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/f6db9cb3-0e24-4f6f-8baf-87170b8cb4fb" alt="Login" width = "35%" >
-<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/804d5c79-ddb8-4e01-a867-c8320cc90964" alt="Register" width = "35%" >
-<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/a344f869-edce-4574-a0d4-08f1395dde56" alt="Home" width = "35%" >
-<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/15babdc9-8702-495e-ba7e-52cd387b11cb" alt="User" width = "35%" >
-<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/3cc17ffd-6511-4149-80f2-69b87df5cdfd" alt="Indoor Game" width = "35%" >
-<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/078ea78a-84f9-43b0-93b9-d7b95780d0b2" alt="Game Detail" width = "35%" >
-<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/78b78f6b-76ec-4d11-ac2b-fde35a8bae0a" alt="Game 1" width = "35%" >
-<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/3cb2b941-169d-4a74-9895-a7c6ba199f43" alt="Game 2" width = "35%" >
+<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/12a48d21-a551-4e11-81c6-13435861db3d" alt="Login" width = "35%" >
+<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/42be6c90-3ad7-438b-9520-a6ddcae2edf2" alt="Register" width = "35%" >
+<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/a495e131-3630-4e30-9000-a9e16c0d4b8c" alt="Home" width = "35%" >
+<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/80315830-f63d-42da-bd6b-5d81787502e1" alt="User" width = "35%" >
+<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/1680a9c2-d04b-4b85-a46f-1aea0b7e41f6" alt="Indoor Game" width = "35%" >
+<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/19d1e2dc-1f9a-43ee-8b2f-5095b9fabfa3" alt="Game Detail" width = "35%" >
+<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/c9cc5f4e-759d-46ad-91c6-e28104abb7fb" alt="Game 1" width = "35%" >
+<img src="https://github.com/mhakkaynak/orienteering/assets/55804472/fff1d554-d0e4-4196-8df8-8b5a9d65cf65" alt="Game 2" width = "35%" >
 </p>
-
