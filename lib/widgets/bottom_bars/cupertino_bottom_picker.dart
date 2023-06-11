@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:orienteering/core/extensions/context_extension.dart';
+import '../../core/extensions/context_extension.dart';
 
 import '../../core/init/navigation/navigation_manager.dart';
 

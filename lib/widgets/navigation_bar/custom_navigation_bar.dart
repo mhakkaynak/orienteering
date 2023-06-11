@@ -12,7 +12,7 @@ class CustomBottomNavigationBar extends Padding {
             key: key,
             padding: EdgeInsets.symmetric(
                 horizontal: context.lowWidthValue / 2,
-                vertical: context.lowHeightValue / 2),
+                vertical: context.lowHeightValue / 4),
             child: GNav(
               tabBackgroundColor: context.theme.colorScheme.surfaceVariant,
               padding: context.paddingLowSymmetric,

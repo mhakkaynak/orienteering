@@ -1,6 +1,6 @@
   import 'package:cloud_firestore/cloud_firestore.dart';
 
-  import 'base_game_model.dart';
+import 'base_game_model.dart';
 
   class OutMapModel extends BaseGameModel{
     OutMapModel({

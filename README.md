@@ -1,16 +1,12 @@
-# orienteering
+#Orienteering Mobile App
 
-A new Flutter project.
+>This project is Kocaeli University Computer Engineering graduation project.
 
-## Getting Started
+&nbsp;The orienteering mobile application helps the competitors to follow the orienteering competitions and download the maps to be used during the competition. In addition, during the competition, it helps the competitors to follow the routes and find the places thanks to the phones with GPS feature. Thanks to this application, competitors can instantly find out where they are on the map and where they should go during the competition.
 
-This project is a starting point for a Flutter application.
+&nbsp;At the end of each competition, the competitors can see the leaderboard and their performance throughout the competition. In this way, they can show higher performance in the next competitions they will participate in.
 
-A few resources to get you started if this is your first Flutter project:
+&nbsp;In addition, our mobile application will also be available for indoor use. In other words, the user will have the indoor map by uploading a picture of the sketch of a closed place to the mobile application. After this process, the user can create control points by marking the desired locations.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+###Screenshots
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

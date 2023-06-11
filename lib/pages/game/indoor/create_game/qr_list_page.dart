@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/service/game/indoor/indoor_game_service.dart';
+import '../../../../service/game/indoor/indoor_game_service.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../../core/constants/navigation/navigation_constant.dart';

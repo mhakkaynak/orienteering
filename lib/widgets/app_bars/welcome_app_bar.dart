@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/core/extensions/context_extension.dart';
+import '../../core/extensions/context_extension.dart';
 
 class WelcomeAppBar extends AppBar {
   WelcomeAppBar({Key? key, required BuildContext context})

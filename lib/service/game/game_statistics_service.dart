@@ -1,5 +1,5 @@
-import 'package:orienteering/core/constants/navigation/navigation_constant.dart';
-import 'package:orienteering/service/user/user_service.dart';
+import '../../core/constants/navigation/navigation_constant.dart';
+import '../user/user_service.dart';
 
 import '../../core/init/firebase/firestore_manager.dart';
 import '../../core/init/navigation/navigation_manager.dart';

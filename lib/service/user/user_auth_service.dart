@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:orienteering/service/user/base_user_service.dart';
+import 'base_user_service.dart';
 
 import '../../core/constants/navigation/navigation_constant.dart';
 import '../../core/init/firebase/firebase_auth_manager.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/core/constants/navigation/navigation_constant.dart';
-import 'package:orienteering/core/extensions/context_extension.dart';
-import 'package:orienteering/core/init/navigation/navigation_manager.dart';
-import 'package:orienteering/service/user/user_auth_service.dart';
-import 'package:orienteering/widgets/buttons/google_sign_in_button.dart';
-import 'package:orienteering/widgets/containers/auth_background_container.dart';
+import '../../core/constants/navigation/navigation_constant.dart';
+import '../../core/extensions/context_extension.dart';
+import '../../core/init/navigation/navigation_manager.dart';
+import '../../service/user/user_auth_service.dart';
+import '../../widgets/buttons/google_sign_in_button.dart';
+import '../../widgets/containers/auth_background_container.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});

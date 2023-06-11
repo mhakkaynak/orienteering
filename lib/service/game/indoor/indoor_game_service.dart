@@ -1,4 +1,4 @@
-import 'package:orienteering/model/game/base_game_model.dart';
+import '../../../model/game/base_game_model.dart';
 
 import '../../../core/init/firebase/firebase_stroge_manager.dart';
 import '../../../core/init/firebase/firestore_manager.dart';

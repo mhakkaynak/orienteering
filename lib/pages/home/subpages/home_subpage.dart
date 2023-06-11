@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/core/constants/app/app_constant.dart';
+import '../../../core/constants/app/app_constant.dart';
 
 import '../../../core/constants/navigation/navigation_constant.dart';
 import '../../../core/extensions/context_extension.dart';

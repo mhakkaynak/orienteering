@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../../core/constants/app/app_constant.dart';
 import '../../core/constants/navigation/navigation_constant.dart';
 import '../../core/extensions/context_extension.dart';
 import '../../core/init/navigation/navigation_manager.dart';
-
-import '../../core/constants/app/app_constant.dart';
 
 class ErrorPage extends StatelessWidget {
   const ErrorPage({super.key});

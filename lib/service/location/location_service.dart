@@ -1,4 +1,4 @@
-import 'package:orienteering/core/init/firebase/firestore_manager.dart';
+import '../../core/init/firebase/firestore_manager.dart';
 
 class LocationService {
   LocationService._init() {

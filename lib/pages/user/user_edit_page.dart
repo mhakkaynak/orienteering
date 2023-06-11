@@ -1,8 +1,8 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:orienteering/widgets/buttons/image_button.dart';
-import 'package:orienteering/widgets/images/user_profile_image.dart';
+import '../../widgets/buttons/image_button.dart';
+import '../../widgets/images/user_profile_image.dart';
 import '../../core/constants/navigation/navigation_constant.dart';
 import '../../core/extensions/string_extension.dart';
 import '../../widgets/buttons/enabled_text_form_field_button.dart';

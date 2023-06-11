@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/core/constants/navigation/navigation_constant.dart';
-import 'package:orienteering/core/extensions/context_extension.dart';
-import 'package:orienteering/core/init/navigation/navigation_manager.dart';
+import '../../core/constants/navigation/navigation_constant.dart';
+import '../../core/extensions/context_extension.dart';
+import '../../core/init/navigation/navigation_manager.dart';
 
 class GameCreateHomePage extends StatelessWidget {
   const GameCreateHomePage({super.key});

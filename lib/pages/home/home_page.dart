@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/pages/game/game_create_home_page.dart';
+import '../game/game_create_home_page.dart';
 
 import 'subpages/home_subpage.dart';
 import '../user/user_page.dart';

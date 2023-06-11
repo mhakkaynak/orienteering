@@ -41,7 +41,7 @@ class _QrCratePageState extends State<QrCratePage> {
     super.initState();
   }
 
-  Future<void> saveImage(Uint8List image) async {
+  Future<void> _saveImage(Uint8List image) async {
     await [Permission.storage].request();
     await ImageGallerySaver.saveImage(image, name: _qrNameTextController.text);
   }
@@ -156,7 +156,7 @@ class _QrCratePageState extends State<QrCratePage> {
   _screenShoot() async {
     final image = await _screenShootController.capture();
     if (image != null) {
-      await saveImage(image);
+      await _saveImage(image);
     }
   }
 

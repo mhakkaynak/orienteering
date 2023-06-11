@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:math' as math;
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'dart:math' as math;
+
 import '../../../model/game/outdoor_game_model.dart';
 import '../../../model/game/outdoor_statistics_model.dart';
 import '../../../service/game/outdoor/outdoor_game_service.dart';

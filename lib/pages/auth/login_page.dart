@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/core/extensions/context_extension.dart';
-import 'package:orienteering/core/extensions/string_extension.dart';
-import 'package:orienteering/widgets/app_bars/welcome_app_bar.dart';
-import 'package:orienteering/widgets/containers/auth_background_container.dart';
+import '../../core/extensions/context_extension.dart';
+import '../../core/extensions/string_extension.dart';
+import '../../widgets/app_bars/welcome_app_bar.dart';
+import '../../widgets/containers/auth_background_container.dart';
 
 import '../../core/constants/navigation/navigation_constant.dart';
 import '../../core/init/navigation/navigation_manager.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/core/constants/navigation/navigation_constant.dart';
-import 'package:orienteering/core/extensions/context_extension.dart';
-import 'package:orienteering/model/game/game_statistics_model.dart';
+import '../../core/constants/navigation/navigation_constant.dart';
+import '../../core/extensions/context_extension.dart';
+import '../../model/game/game_statistics_model.dart';
 
 import '../../core/init/navigation/navigation_manager.dart';
 import '../../service/game/game_statistics_service.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:orienteering/core/constants/navigation/navigation_constant.dart';
-import 'package:orienteering/core/init/navigation/navigation_manager.dart';
-import 'package:orienteering/service/user/user_auth_service.dart';
-import 'package:orienteering/widgets/images/user_profile_image.dart';
+import '../../core/constants/navigation/navigation_constant.dart';
+import '../../core/init/navigation/navigation_manager.dart';
+import '../../service/user/user_auth_service.dart';
+import '../../widgets/images/user_profile_image.dart';
 
 import '../../core/extensions/context_extension.dart';
 import '../../core/extensions/string_extension.dart';
